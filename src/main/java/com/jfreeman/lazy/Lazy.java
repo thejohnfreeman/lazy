@@ -9,13 +9,28 @@ import java.util.List;
  * forced until all of its dependencies are forced. Forcing a lazy value will
  * recursively force its dependencies, but an evaluation graph that is too
  * deep can overflow the call stack, so machinery is provided in {@link
- * LazyValues} for safely forcing a lazy value.
+ * LazyHelp} for safely forcing a lazy value.
  * <p/>
  * In generic implementing types from this package, the value type is always the
  * first type parameter.
  */
-interface LazyValue<T> {
-    List<LazyValue<?>> getDependencies();
+public interface Lazy<T> {
+    /**
+     * @return an immutable list of dependencies, or {@code null} if they are
+     * not known.
+     */
+    List<Lazy<?>> getDependencies();
+
+    /**
+     * Evaluate this value and return it.
+     * @return the value.
+     * @throws IllegalStateException if unprepared for evaluation.
+     */
     T force() throws IllegalStateException;
+
+    /**
+     * Return whether this value has been forced yet.
+     * @return {@code true} iff this value has been forced.
+     */
     boolean isForced();
 }

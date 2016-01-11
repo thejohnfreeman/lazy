@@ -9,8 +9,8 @@ import com.google.common.collect.ImmutableList;
  *
  * @author jfreeman
  */
-public class Constant<T>
-    implements LazyValue<T>
+class Constant<T>
+    implements Lazy<T>
 {
     private final T _value;
 
@@ -23,7 +23,7 @@ public class Constant<T>
     }
 
     @Override
-    public List<LazyValue<?>> getDependencies() {
+    public List<Lazy<?>> getDependencies() {
         return ImmutableList.of();
     }
 

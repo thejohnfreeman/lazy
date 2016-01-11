@@ -14,29 +14,29 @@ import com.jfreeman.function.BiFunction;
  * @param <B> the type of the second dependency.
  * @author jfreeman
  */
-public class BiThunk<T, A, B>
-    implements LazyValue<T>
+class BiThunk<T, A, B>
+    implements Lazy<T>
 {
     private T _value = null;
     private boolean _forced = false;
-    private final LazyValue<A> _depA;
-    private final LazyValue<B> _depB;
+    private final Lazy<A> _depA;
+    private final Lazy<B> _depB;
     private final BiFunction<A, B, T> _func;
 
-    private BiThunk(LazyValue<A> a, LazyValue<B> b, BiFunction<A, B, T> func) {
+    private BiThunk(Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func) {
         _depA = a;
         _depB = b;
         _func = func;
     }
 
     public static <T, A, B> BiThunk<T, A, B> create(
-        LazyValue<A> a, LazyValue<B> b, BiFunction<A, B, T> func)
+        Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func)
     {
         return new BiThunk<>(a, b, func);
     }
 
     @Override
-    public List<LazyValue<?>> getDependencies() {
+    public List<Lazy<?>> getDependencies() {
         return ImmutableList.of(_depA, _depB);
     }
 

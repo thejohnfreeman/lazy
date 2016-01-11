@@ -9,18 +9,18 @@ import com.jfreeman.function.Function;
 /**
  * @author jfreeman
  */
-public class LazyValuesTest
+public class LazyHelpTest
 {
     @Test
     public void testForceConstant() {
-        final LazyValue<Integer> x = LazyValues.bind(1);
+        final Lazy<Integer> x = LazyHelp.bind(1);
         assertEquals(1, (int) x.force());
     }
 
     @Test
     public void testForceThunk() {
-        final LazyValue<Integer> x = LazyValues.bind(1);
-        final LazyValue<Integer> y = LazyValues.bind(x, new Function<Integer, Integer>()
+        final Lazy<Integer> x = LazyHelp.bind(1);
+        final Lazy<Integer> y = LazyHelp.bind(x, new Function<Integer, Integer>()
         {
             @Override
             public Integer apply(Integer x) {
@@ -32,27 +32,27 @@ public class LazyValuesTest
 
     @Test
     public void testUnbound() {
-        final LateBoundValue<Integer> x = LazyValues.bindLater();
+        final LateBound<Integer> x = LazyHelp.bindLater();
         assertFalse(x.isBound());
         assertFalse(x.isForced());
     }
 
     @Test(expected=IllegalStateException.class)
     public void testForceUnbound() {
-        final LateBoundValue<Integer> x = LazyValues.bindLater();
+        final LateBound<Integer> x = LazyHelp.bindLater();
         x.force();
     }
 
-    @Test(expected=IllegalStateException.class)
+    @Test
     public void testGetDependenciesUnbound() {
-        final LateBoundValue<Integer> x = LazyValues.bindLater();
-        x.getDependencies();
+        final LateBound<Integer> x = LazyHelp.bindLater();
+        assertEquals(null, x.getDependencies());
     }
 
     @Test
     public void testBoundConstant() {
-        final LateBoundValue<Integer> x = LazyValues.bindLater();
-        x.bind(LazyValues.bind(1));
+        final LateBound<Integer> x = LazyHelp.bindLater();
+        x.bind(LazyHelp.bind(1));
         assertTrue(x.isBound());
         assertEquals(1, (int) x.force());
         assertTrue(x.isForced());
@@ -60,9 +60,9 @@ public class LazyValuesTest
 
     @Test
     public void testBoundThunk() {
-        final LateBoundValue<Integer> x = LazyValues.bindLater();
-        final LazyValue<Integer> a = LazyValues.bind(1);
-        final LazyValue<Integer> b = LazyValues.bind(a, new Function<Integer, Integer>()
+        final LateBound<Integer> x = LazyHelp.bindLater();
+        final Lazy<Integer> a = LazyHelp.bind(1);
+        final Lazy<Integer> b = LazyHelp.bind(a, new Function<Integer, Integer>()
         {
             @Override
             public Integer apply(Integer a) {
@@ -73,10 +73,10 @@ public class LazyValuesTest
         assertEquals(2, (int) x.force());
     }
 
-    private LazyValue<Integer> bindChain(int N) {
-        LazyValue<Integer> x = LazyValues.bind(0);
+    private Lazy<Integer> bindChain(int N) {
+        Lazy<Integer> x = LazyHelp.bind(0);
         for (int i = 0; i < N; ++i) {
-            x = LazyValues.bind(x, new Function<Integer, Integer>()
+            x = LazyHelp.bind(x, new Function<Integer, Integer>()
             {
                 @Override
                 public Integer apply(Integer x) {
@@ -96,6 +96,6 @@ public class LazyValuesTest
     @Test
     public void testSafelyForce() {
         final int N = 1_000_000;
-        assertEquals(N, (int) LazyValues.safelyForce(bindChain(N)));
+        assertEquals(N, (int) LazyHelp.force(bindChain(N)));
     }
 }

@@ -13,29 +13,29 @@ import com.jfreeman.function.Function;
  * @param <A> the type of the dependency.
  * @author jfreeman
  */
-public class Thunk<T, A>
-    implements LazyValue<T>
+class Thunk<T, A>
+    implements Lazy<T>
 {
 
     private T _value = null;
     private boolean _forced = false;
-    private final LazyValue<A> _dep;
+    private final Lazy<A> _dep;
     private final Function<A, T> _func;
 
-    private Thunk(LazyValue<A> dep, Function<A, T> func) {
+    private Thunk(Lazy<A> dep, Function<A, T> func) {
         _dep = dep;
         _func = func;
     }
 
     public static <T, A> Thunk<T, A> create(
-        LazyValue<A> dep, Function<A, T> func)
+        Lazy<A> dep, Function<A, T> func)
     {
         return new Thunk<>(dep, func);
     }
 
     @Override
-    public List<LazyValue<?>> getDependencies() {
-        return ImmutableList.<LazyValue<?>>of(_dep);
+    public List<Lazy<?>> getDependencies() {
+        return ImmutableList.<Lazy<?>>of(_dep);
     }
 
     @Override

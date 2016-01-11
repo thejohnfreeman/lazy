@@ -10,22 +10,22 @@ import com.sun.istack.internal.NotNull;
  * @param <T> the type of the value.
  * @author jfreeman
  */
-public class LateBoundValue<T>
-    implements LazyValue<T>
+public class LateBound<T>
+    implements Lazy<T>
 {
-    private LazyValue<T> _value = null;
+    private Lazy<T> _value = null;
 
-    private LateBoundValue() {}
+    private LateBound() {}
 
-    public static <T> LateBoundValue<T> create() {
-        return new LateBoundValue<>();
+    public static <T> LateBound<T> create() {
+        return new LateBound<>();
     }
 
     /**
      * Bind the value. May only be called once.
      * @param value the value this object should represent.
      */
-    public void bind(@NotNull LazyValue<T> value) {
+    public void bind(@NotNull Lazy<T> value) {
         if (_value != null) {
             throw new IllegalStateException("already bound");
         }
@@ -36,21 +36,16 @@ public class LateBoundValue<T>
         return _value != null;
     }
 
-    private void assertBound() {
-        if (!isBound()) {
-            throw new IllegalStateException("unbound");
-        }
-    }
-
     @Override
-    public List<LazyValue<?>> getDependencies() {
-        assertBound();
-        return _value.getDependencies();
+    public List<Lazy<?>> getDependencies() {
+        return isBound() ? _value.getDependencies() : null;
     }
 
     @Override
     public T force() throws IllegalStateException {
-        assertBound();
+        if (!isBound()) {
+            throw new IllegalStateException("unbound");
+        }
         return _value.force();
     }
 

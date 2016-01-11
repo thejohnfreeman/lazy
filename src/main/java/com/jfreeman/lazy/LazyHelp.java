@@ -10,45 +10,54 @@ import com.jfreeman.function.TriFunction;
 /**
  * Functions for using lazy values.
  */
-public final class LazyValues {
+public final class LazyHelp
+{
 
     /** Just a namespace, so no constructor. */
-    private LazyValues() {
-    }
+    private LazyHelp() {}
 
-    public static <T> LazyValue<T> bind(T value) {
+    public static <T> Lazy<T> bind(T value) {
         return Constant.create(value);
     }
 
-    public static <T, A> LazyValue<T> bind(
-        LazyValue<A> a, Function<A, T> func)
+    public static <T, A> Lazy<T> bind(
+        Lazy<A> a, Function<A, T> func)
     {
         return Thunk.create(a, func);
     }
 
-    public static <T, A, B> LazyValue<T> bind(
-        LazyValue<A> a, LazyValue<B> b, BiFunction<A, B, T> func)
+    public static <T, A, B> Lazy<T> bind(
+        Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func)
     {
         return BiThunk.create(a, b, func);
     }
 
-    public static <T, A, B, C> LazyValue<T> bind(
-        LazyValue<A> a, LazyValue<B> b, LazyValue<C> c,
+    public static <T, A, B, C> Lazy<T> bind(
+        Lazy<A> a, Lazy<B> b, Lazy<C> c,
         TriFunction<A, B, C, T> func)
     {
         return TriThunk.create(a, b, c, func);
     }
 
-    public static <T> LateBoundValue<T> bindLater() {
-        return LateBoundValue.create();
+    public static <T> LateBound<T> bindLater() {
+        return LateBound.create();
     }
 
-    public static <T> T safelyForce(LazyValue<T> value) {
+    /**
+     * When forced, a long chain of lazy values can cause a stack overflow.
+     * This method forces a value iteratively.
+     * @param value the lazy value.
+     * @return the forced value.
+     * @throws IllegalStateException
+     */
+    public static <T> T force(Lazy<T> value)
+        throws IllegalStateException
+    {
         Stack<Context> values = new Stack<>();
         values.push(new Context(value));
 
         while (!values.empty()) {
-            safelyForceTop(values);
+            forceTop(values);
         }
 
         return value.force();
@@ -60,9 +69,9 @@ public final class LazyValues {
      * multi-level `break`. This particular case does not fit the labeled break
      * pattern for Java.
      */
-    private static void safelyForceTop(Stack<Context> values) {
+    private static void forceTop(Stack<Context> values) {
         final Context ctx = values.peek();
-        for (LazyValue<?> dep : ctx) {
+        for (Lazy<?> dep : ctx) {
             if (!dep.isForced()) {
                 values.push(new Context(dep));
                 return;
@@ -77,17 +86,18 @@ public final class LazyValues {
      * all of the dependencies have been forced, the value is forced.
      */
     private static class Context
-        implements Iterable<LazyValue<?>> {
-        public final LazyValue<?> value;
-        private final Iterator<LazyValue<?>> _it;
+        implements Iterable<Lazy<?>>
+    {
+        public final Lazy<?> value;
+        private final Iterator<Lazy<?>> _it;
 
-        public Context(LazyValue<?> value) {
+        public Context(Lazy<?> value) {
             this.value = value;
             _it = value.getDependencies().iterator();
         }
 
         @Override
-        public Iterator<LazyValue<?>> iterator() {
+        public Iterator<Lazy<?>> iterator() {
             return _it;
         }
     }

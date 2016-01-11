@@ -15,17 +15,17 @@ import com.jfreeman.function.TriFunction;
  * @param <C> the type of the third dependency.
  * @author jfreeman
  */
-public class TriThunk<T, A, B, C>
-    implements LazyValue<T>
+class TriThunk<T, A, B, C>
+    implements Lazy<T>
 {
     private T _value = null;
     private boolean _forced = false;
-    private final LazyValue<A> _depA;
-    private final LazyValue<B> _depB;
-    private final LazyValue<C> _depC;
+    private final Lazy<A> _depA;
+    private final Lazy<B> _depB;
+    private final Lazy<C> _depC;
     private final TriFunction<A, B, C, T> _func;
 
-    private TriThunk(LazyValue<A> a, LazyValue<B> b, LazyValue<C> c,
+    private TriThunk(Lazy<A> a, Lazy<B> b, Lazy<C> c,
         TriFunction<A, B, C, T> func)
     {
         _depA = a;
@@ -35,14 +35,14 @@ public class TriThunk<T, A, B, C>
     }
 
     public static <T, A, B, C> TriThunk<T, A, B, C> create(
-        LazyValue<A> a, LazyValue<B> b, LazyValue<C> c,
+        Lazy<A> a, Lazy<B> b, Lazy<C> c,
         TriFunction<A, B, C, T> func)
     {
         return new TriThunk<>(a, b, c, func);
     }
 
     @Override
-    public List<LazyValue<?>> getDependencies() {
+    public List<Lazy<?>> getDependencies() {
         return ImmutableList.of(_depA, _depB, _depC);
     }
 
