@@ -3,6 +3,7 @@ package com.jfreeman.lazy;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
+import com.sun.istack.internal.NotNull;
 
 import com.jfreeman.function.BiFunction;
 
@@ -17,20 +18,22 @@ import com.jfreeman.function.BiFunction;
 class BiThunk<T, A, B>
     implements Lazy<T>
 {
-    private T _value = null;
-    private boolean _forced = false;
     private final Lazy<A> _depA;
     private final Lazy<B> _depB;
-    private final BiFunction<A, B, T> _func;
+    private BiFunction<A, B, T> _func;
+    private T _value = null;
 
-    private BiThunk(Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func) {
+    private BiThunk(@NotNull Lazy<A> a, @NotNull Lazy<B> b,
+        @NotNull BiFunction<A, B, T> func)
+    {
         _depA = a;
         _depB = b;
         _func = func;
     }
 
     public static <T, A, B> BiThunk<T, A, B> create(
-        Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func)
+        @NotNull Lazy<A> a, @NotNull Lazy<B> b,
+        @NotNull BiFunction<A, B, T> func)
     {
         return new BiThunk<>(a, b, func);
     }
@@ -41,18 +44,27 @@ class BiThunk<T, A, B>
     }
 
     @Override
-    public T force() throws IllegalStateException {
-        if (!_forced) {
-            A a = _depA.force();
-            B b = _depB.force();
-            _value = _func.apply(a, b);
-            _forced = true;
+    public T getValue() throws IllegalStateException {
+        if (!isForced()) {
+            throw new IllegalStateException("not yet forced");
         }
         return _value;
     }
 
     @Override
+    public T force() throws IllegalStateException {
+        if (isForced()) {
+            throw new IllegalStateException("already forced");
+        }
+        final A a = _depA.getValue();
+        final B b = _depB.getValue();
+        _value = _func.apply(a, b);
+        _func = null;
+        return _value;
+    }
+
+    @Override
     public boolean isForced() {
-        return _forced;
+        return _func == null;
     }
 }

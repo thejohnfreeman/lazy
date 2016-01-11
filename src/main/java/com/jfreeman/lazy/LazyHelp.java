@@ -1,7 +1,9 @@
 package com.jfreeman.lazy;
 
+import java.util.ArrayDeque;
 import java.util.Iterator;
-import java.util.Stack;
+
+import com.sun.istack.internal.NotNull;
 
 import com.jfreeman.function.BiFunction;
 import com.jfreeman.function.Function;
@@ -21,20 +23,21 @@ public final class LazyHelp
     }
 
     public static <T, A> Lazy<T> bind(
-        Lazy<A> a, Function<A, T> func)
+        @NotNull Lazy<A> a, @NotNull Function<A, T> func)
     {
         return Thunk.create(a, func);
     }
 
     public static <T, A, B> Lazy<T> bind(
-        Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func)
+        @NotNull Lazy<A> a, @NotNull Lazy<B> b,
+        @NotNull BiFunction<A, B, T> func)
     {
         return BiThunk.create(a, b, func);
     }
 
     public static <T, A, B, C> Lazy<T> bind(
-        Lazy<A> a, Lazy<B> b, Lazy<C> c,
-        TriFunction<A, B, C, T> func)
+        @NotNull Lazy<A> a, @NotNull Lazy<B> b, @NotNull Lazy<C> c,
+        @NotNull TriFunction<A, B, C, T> func)
     {
         return TriThunk.create(a, b, c, func);
     }
@@ -50,17 +53,17 @@ public final class LazyHelp
      * @return the forced value.
      * @throws IllegalStateException
      */
-    public static <T> T force(Lazy<T> value)
+    public static <T> T force(@NotNull Lazy<T> value)
         throws IllegalStateException
     {
-        Stack<Context> values = new Stack<>();
+        ArrayDeque<Context> values = new ArrayDeque<>();
         values.push(new Context(value));
 
-        while (!values.empty()) {
+        while (!values.isEmpty()) {
             forceTop(values);
         }
 
-        return value.force();
+        return value.getValue();
     }
 
     /**
@@ -69,15 +72,17 @@ public final class LazyHelp
      * multi-level `break`. This particular case does not fit the labeled break
      * pattern for Java.
      */
-    private static void forceTop(Stack<Context> values) {
-        final Context ctx = values.peek();
-        for (Lazy<?> dep : ctx) {
-            if (!dep.isForced()) {
-                values.push(new Context(dep));
-                return;
+    private static void forceTop(ArrayDeque<Context> values) {
+        final Context ctx = values.getFirst();
+        if (!ctx.value.isForced()) {
+            for (Lazy<?> dep : ctx) {
+                if (!dep.isForced()) {
+                    values.push(new Context(dep));
+                    return;
+                }
             }
+            ctx.value.force();
         }
-        ctx.value.force();
         values.pop();
     }
 

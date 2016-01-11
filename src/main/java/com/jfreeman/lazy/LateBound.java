@@ -42,6 +42,11 @@ public class LateBound<T>
     }
 
     @Override
+    public T getValue() throws IllegalStateException {
+        return _value.getValue();
+    }
+
+    @Override
     public T force() throws IllegalStateException {
         if (!isBound()) {
             throw new IllegalStateException("unbound");

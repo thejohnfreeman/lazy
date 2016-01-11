@@ -28,6 +28,11 @@ class Constant<T>
     }
 
     @Override
+    public T getValue() throws IllegalStateException {
+        return _value;
+    }
+
+    @Override
     public T force() throws IllegalStateException {
         return _value;
     }

@@ -3,6 +3,7 @@ package com.jfreeman.lazy;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
+import com.sun.istack.internal.NotNull;
 
 import com.jfreeman.function.Function;
 
@@ -17,18 +18,17 @@ class Thunk<T, A>
     implements Lazy<T>
 {
 
-    private T _value = null;
-    private boolean _forced = false;
     private final Lazy<A> _dep;
-    private final Function<A, T> _func;
+    private Function<A, T> _func;
+    private T _value = null;
 
-    private Thunk(Lazy<A> dep, Function<A, T> func) {
+    private Thunk(@NotNull Lazy<A> dep, @NotNull Function<A, T> func) {
         _dep = dep;
         _func = func;
     }
 
     public static <T, A> Thunk<T, A> create(
-        Lazy<A> dep, Function<A, T> func)
+        @NotNull Lazy<A> dep, @NotNull Function<A, T> func)
     {
         return new Thunk<>(dep, func);
     }
@@ -39,17 +39,25 @@ class Thunk<T, A>
     }
 
     @Override
-    public T force() throws IllegalStateException {
-        if (!_forced) {
-            final A dep = _dep.force();
-            _value = _func.apply(dep);
-            _forced = true;
+    public T getValue() throws IllegalStateException {
+        if (!isForced()) {
+            throw new IllegalStateException("not yet forced");
         }
         return _value;
     }
 
     @Override
+    public T force() throws IllegalStateException {
+        if (_func == null) {
+            throw new IllegalStateException("already forced");
+        }
+        _value = _func.apply(_dep.getValue());
+        _func = null;
+        return _value;
+    }
+
+    @Override
     public boolean isForced() {
-        return _forced;
+        return _func == null;
     }
 }

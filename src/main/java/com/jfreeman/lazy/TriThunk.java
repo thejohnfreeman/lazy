@@ -3,6 +3,7 @@ package com.jfreeman.lazy;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
+import com.sun.istack.internal.NotNull;
 
 import com.jfreeman.function.TriFunction;
 
@@ -18,15 +19,14 @@ import com.jfreeman.function.TriFunction;
 class TriThunk<T, A, B, C>
     implements Lazy<T>
 {
-    private T _value = null;
-    private boolean _forced = false;
     private final Lazy<A> _depA;
     private final Lazy<B> _depB;
     private final Lazy<C> _depC;
-    private final TriFunction<A, B, C, T> _func;
+    private TriFunction<A, B, C, T> _func;
+    private T _value = null;
 
-    private TriThunk(Lazy<A> a, Lazy<B> b, Lazy<C> c,
-        TriFunction<A, B, C, T> func)
+    private TriThunk(@NotNull Lazy<A> a, @NotNull Lazy<B> b, @NotNull Lazy<C> c,
+        @NotNull TriFunction<A, B, C, T> func)
     {
         _depA = a;
         _depB = b;
@@ -35,8 +35,8 @@ class TriThunk<T, A, B, C>
     }
 
     public static <T, A, B, C> TriThunk<T, A, B, C> create(
-        Lazy<A> a, Lazy<B> b, Lazy<C> c,
-        TriFunction<A, B, C, T> func)
+        @NotNull Lazy<A> a, @NotNull Lazy<B> b, @NotNull Lazy<C> c,
+        @NotNull TriFunction<A, B, C, T> func)
     {
         return new TriThunk<>(a, b, c, func);
     }
@@ -47,19 +47,28 @@ class TriThunk<T, A, B, C>
     }
 
     @Override
-    public T force() throws IllegalStateException {
-        if (!_forced) {
-            A a = _depA.force();
-            B b = _depB.force();
-            C c = _depC.force();
-            _value = _func.apply(a, b, c);
-            _forced = true;
+    public T getValue() throws IllegalStateException {
+        if (!isForced()) {
+            throw new IllegalStateException("not yet forced");
         }
         return _value;
     }
 
     @Override
+    public T force() throws IllegalStateException {
+        if (isForced()) {
+            throw new IllegalStateException("already forced");
+        }
+        final A a = _depA.getValue();
+        final B b = _depB.getValue();
+        final C c = _depC.getValue();
+        _value = _func.apply(a, b, c);
+        _func = null;
+        return _value;
+    }
+
+    @Override
     public boolean isForced() {
-        return _forced;
+        return _func == null;
     }
 }

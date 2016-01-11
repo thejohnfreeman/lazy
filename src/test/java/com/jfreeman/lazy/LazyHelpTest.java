@@ -14,7 +14,7 @@ public class LazyHelpTest
     @Test
     public void testForceConstant() {
         final Lazy<Integer> x = LazyHelp.bind(1);
-        assertEquals(1, (int) x.force());
+        assertEquals(1, (int) LazyHelp.force(x));
     }
 
     @Test
@@ -27,7 +27,7 @@ public class LazyHelpTest
                 return x * 2;
             }
         });
-        assertEquals(2, (int) y.force());
+        assertEquals(2, (int) LazyHelp.force(y));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class LazyHelpTest
         final LateBound<Integer> x = LazyHelp.bindLater();
         x.bind(LazyHelp.bind(1));
         assertTrue(x.isBound());
-        assertEquals(1, (int) x.force());
+        assertEquals(1, (int) LazyHelp.force(x));
         assertTrue(x.isForced());
     }
 
@@ -70,10 +70,12 @@ public class LazyHelpTest
             }
         });
         x.bind(b);
-        assertEquals(2, (int) x.force());
+        assertEquals(2, (int) LazyHelp.force(x));
     }
 
-    private Lazy<Integer> bindChain(int N) {
+    @Test
+    public void testForceLongChain() {
+        final int N = 1_000_000;
         Lazy<Integer> x = LazyHelp.bind(0);
         for (int i = 0; i < N; ++i) {
             x = LazyHelp.bind(x, new Function<Integer, Integer>()
@@ -84,18 +86,6 @@ public class LazyHelpTest
                 }
             });
         }
-        return x;
-    }
-
-    @Test(expected=StackOverflowError.class)
-    public void testStackOverflow() {
-        final int N = 1_000_000;
-        assertEquals(N, (int) bindChain(N).force());
-    }
-
-    @Test
-    public void testSafelyForce() {
-        final int N = 1_000_000;
-        assertEquals(N, (int) LazyHelp.force(bindChain(N)));
+        assertEquals(N, (int) LazyHelp.force(x));
     }
 }
