@@ -3,7 +3,6 @@ package com.jfreeman.lazy;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-import com.sun.istack.internal.NotNull;
 
 import com.jfreeman.function.Function;
 
@@ -22,13 +21,12 @@ class Thunk<T, A>
     private Function<A, T> _func;
     private T _value = null;
 
-    private Thunk(@NotNull Lazy<A> dep, @NotNull Function<A, T> func) {
+    private Thunk(Lazy<A> dep, Function<A, T> func) {
         _dep = dep;
         _func = func;
     }
 
-    public static <T, A> Thunk<T, A> create(
-        @NotNull Lazy<A> dep, @NotNull Function<A, T> func)
+    public static <T, A> Thunk<T, A> create(Lazy<A> dep, Function<A, T> func)
     {
         return new Thunk<>(dep, func);
     }

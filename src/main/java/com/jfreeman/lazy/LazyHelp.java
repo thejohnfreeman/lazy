@@ -3,8 +3,6 @@ package com.jfreeman.lazy;
 import java.util.ArrayDeque;
 import java.util.Iterator;
 
-import com.sun.istack.internal.NotNull;
-
 import com.jfreeman.function.BiFunction;
 import com.jfreeman.function.Function;
 import com.jfreeman.function.TriFunction;
@@ -22,22 +20,18 @@ public final class LazyHelp
         return Constant.create(value);
     }
 
-    public static <T, A> Lazy<T> bind(
-        @NotNull Lazy<A> a, @NotNull Function<A, T> func)
-    {
+    public static <T, A> Lazy<T> bind(Lazy<A> a, Function<A, T> func) {
         return Thunk.create(a, func);
     }
 
     public static <T, A, B> Lazy<T> bind(
-        @NotNull Lazy<A> a, @NotNull Lazy<B> b,
-        @NotNull BiFunction<A, B, T> func)
+        Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func)
     {
         return BiThunk.create(a, b, func);
     }
 
     public static <T, A, B, C> Lazy<T> bind(
-        @NotNull Lazy<A> a, @NotNull Lazy<B> b, @NotNull Lazy<C> c,
-        @NotNull TriFunction<A, B, C, T> func)
+        Lazy<A> a, Lazy<B> b, Lazy<C> c, TriFunction<A, B, C, T> func)
     {
         return TriThunk.create(a, b, c, func);
     }
@@ -53,7 +47,7 @@ public final class LazyHelp
      * @return the forced value.
      * @throws IllegalStateException
      */
-    public static <T> T force(@NotNull Lazy<T> value)
+    public static <T> T force(Lazy<T> value)
         throws IllegalStateException
     {
         ArrayDeque<Context> values = new ArrayDeque<>();

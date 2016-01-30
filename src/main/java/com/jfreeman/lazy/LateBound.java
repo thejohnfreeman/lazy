@@ -2,8 +2,6 @@ package com.jfreeman.lazy;
 
 import java.util.List;
 
-import com.sun.istack.internal.NotNull;
-
 /**
  * A value whose provenance is unknown at construction.
  *
@@ -25,7 +23,7 @@ public class LateBound<T>
      * Bind the value. May only be called once.
      * @param value the value this object should represent.
      */
-    public void bind(@NotNull Lazy<T> value) {
+    public void bind(Lazy<T> value) {
         if (_value != null) {
             throw new IllegalStateException("already bound");
         }

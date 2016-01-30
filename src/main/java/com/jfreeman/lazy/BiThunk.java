@@ -3,7 +3,6 @@ package com.jfreeman.lazy;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-import com.sun.istack.internal.NotNull;
 
 import com.jfreeman.function.BiFunction;
 
@@ -23,17 +22,14 @@ class BiThunk<T, A, B>
     private BiFunction<A, B, T> _func;
     private T _value = null;
 
-    private BiThunk(@NotNull Lazy<A> a, @NotNull Lazy<B> b,
-        @NotNull BiFunction<A, B, T> func)
-    {
+    private BiThunk(Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func) {
         _depA = a;
         _depB = b;
         _func = func;
     }
 
     public static <T, A, B> BiThunk<T, A, B> create(
-        @NotNull Lazy<A> a, @NotNull Lazy<B> b,
-        @NotNull BiFunction<A, B, T> func)
+        Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func)
     {
         return new BiThunk<>(a, b, func);
     }

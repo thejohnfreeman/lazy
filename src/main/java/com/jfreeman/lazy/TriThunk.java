@@ -3,7 +3,6 @@ package com.jfreeman.lazy;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-import com.sun.istack.internal.NotNull;
 
 import com.jfreeman.function.TriFunction;
 
@@ -25,8 +24,8 @@ class TriThunk<T, A, B, C>
     private TriFunction<A, B, C, T> _func;
     private T _value = null;
 
-    private TriThunk(@NotNull Lazy<A> a, @NotNull Lazy<B> b, @NotNull Lazy<C> c,
-        @NotNull TriFunction<A, B, C, T> func)
+    private TriThunk(
+        Lazy<A> a, Lazy<B> b, Lazy<C> c, TriFunction<A, B, C, T> func)
     {
         _depA = a;
         _depB = b;
@@ -35,8 +34,7 @@ class TriThunk<T, A, B, C>
     }
 
     public static <T, A, B, C> TriThunk<T, A, B, C> create(
-        @NotNull Lazy<A> a, @NotNull Lazy<B> b, @NotNull Lazy<C> c,
-        @NotNull TriFunction<A, B, C, T> func)
+        Lazy<A> a, Lazy<B> b, Lazy<C> c, TriFunction<A, B, C, T> func)
     {
         return new TriThunk<>(a, b, c, func);
     }
