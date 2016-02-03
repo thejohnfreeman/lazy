@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import com.jfreeman.function.BiFunction;
 import com.jfreeman.function.Function;
+import com.jfreeman.function.QuadFunction;
 import com.jfreeman.function.TriFunction;
 
 /**
@@ -34,6 +35,13 @@ public final class LazyHelp
         Lazy<A> a, Lazy<B> b, Lazy<C> c, TriFunction<A, B, C, T> func)
     {
         return TriThunk.create(a, b, c, func);
+    }
+
+    public static <T, A, B, C, D> Lazy<T> bind(
+        Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d,
+        QuadFunction<A, B, C, D, T> func)
+    {
+        return QuadThunk.create(a, b, c, d, func);
     }
 
     public static <T> LateBound<T> bindLater() {
