@@ -1,1 +1,35 @@
 apply plugin: 'java'
+
+configurations {
+    checker
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    checker 'org.checkerframework:checker:1.9.6'
+    checker 'org.checkerframework:jdk8:1.9.6'
+    compile configurations.checker.dependencies
+    compile 'com.google.guava:guava:19.0'
+    testCompile 'junit:junit:4.12'
+}
+
+tasks.withType(Test) {
+    scanForTestClasses = false
+    include '**/*Test.class'
+}
+
+/* allprojects { */
+/*     tasks.withType(JavaCompile).all { JavaCompile compile -> */
+/*         compile.options.debug = true */
+/*         compile.options.compilerArgs = [ */
+/*             "-Xbootclasspath/p:${configurations.checker.asPath}", */
+/*             '-processor', 'org.checkerframework.checker.nullness.NullnessChecker', */
+/*             '-implicit:class', */
+/*             '-AprintErrorStack' */
+/*         ] */
+/*     } */
+/* } */
+
