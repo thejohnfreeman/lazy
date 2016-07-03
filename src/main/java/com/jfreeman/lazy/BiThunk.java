@@ -1,10 +1,9 @@
 package com.jfreeman.lazy;
 
 import java.util.List;
+import java.util.function.BiFunction;
 
 import com.google.common.collect.ImmutableList;
-
-import com.jfreeman.function.BiFunction;
 
 /**
  * A lazy value with two dependencies.

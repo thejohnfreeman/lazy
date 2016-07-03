@@ -1,10 +1,9 @@
 package com.jfreeman.lazy;
 
 import java.util.List;
+import java.util.function.Function;
 
 import com.google.common.collect.ImmutableList;
-
-import com.jfreeman.function.Function;
 
 /**
  * A lazy value with a single dependency.

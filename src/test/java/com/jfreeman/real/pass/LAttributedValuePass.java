@@ -3,9 +3,6 @@ package com.jfreeman.real.pass;
 import com.jfreeman.attribute.Attribute;
 import com.jfreeman.attribute.InheritedAttribute;
 import com.jfreeman.attribute.SynthesizedAttribute;
-import com.jfreeman.function.BiFunction;
-import com.jfreeman.function.Function;
-import com.jfreeman.function.QuadFunction;
 import com.jfreeman.lazy.LazyHelp;
 import com.jfreeman.real.syntax.ConsProduction;
 import com.jfreeman.real.syntax.DigitNode;
@@ -83,12 +80,7 @@ public class LAttributedValuePass
             _val.set(node, LazyHelp.bind(
                 _val.get(node.left()),
                 _val.get(node.right()),
-                new BiFunction<Double, Double, Double>() {
-                    @Override
-                    public Double apply(Double l1, Double l2) {
-                        return l1 + l2;
-                    }
-                }
+                (l, r) -> l + r
             ));
             _side.set(node.left(), LazyHelp.bind(Side.LEFT));
             _side.set(node.right(), LazyHelp.bind(Side.RIGHT));
@@ -104,28 +96,16 @@ public class LAttributedValuePass
         protected void annotate(ConsProduction node) {
             _len.set(node, LazyHelp.bind(
                 _len.get(node.head()),
-                new Function<Integer, Integer>() {
-                    @Override
-                    public Integer apply(Integer len) {
-                        return len + 1;
-                    }
-                }
+                len -> len + 1
             ));
             _val.set(node, LazyHelp.bind(
                 _side.get(node),
                 _val.get(node.head()),
                 _val.get(node.tail()),
                 _len.get(node),
-                new QuadFunction<Side, Double, Double, Integer, Double>() {
-                    @Override
-                    public Double apply(
-                        Side side, Double l1, Double b, Integer len)
-                    {
-                        return (side == Side.LEFT)
-                               ? l1 * BASE + b
-                               : l1 + b / Math.pow(BASE, len);
-                    }
-                }
+                (side, h, t, len) -> (side == Side.LEFT)
+                       ? h * BASE + t
+                       : h + t / Math.pow(BASE, len)
             ));
             _side.set(node.head(), _side.get(node));
         }
@@ -136,15 +116,7 @@ public class LAttributedValuePass
             _val.set(node, LazyHelp.bind(
                 _val.get(node.digit()),
                 _side.get(node),
-                new BiFunction<Double, Side, Double>() {
-                    @Override
-                    public Double apply(Double v, Side side) {
-                        if (side == Side.RIGHT) {
-                            v /= BASE;
-                        }
-                        return v;
-                    }
-                }
+                (v, side) -> (side == Side.RIGHT) ? v / BASE : v
             ));
         }
 

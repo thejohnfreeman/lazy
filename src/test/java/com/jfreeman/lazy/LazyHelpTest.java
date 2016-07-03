@@ -4,8 +4,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-import com.jfreeman.function.Function;
-
 /**
  * @author jfreeman
  */
@@ -20,13 +18,7 @@ public class LazyHelpTest
     @Test
     public void testForceThunk() {
         final Lazy<Integer> x = LazyHelp.bind(1);
-        final Lazy<Integer> y = LazyHelp.bind(x, new Function<Integer, Integer>()
-        {
-            @Override
-            public Integer apply(Integer x) {
-                return x * 2;
-            }
-        });
+        final Lazy<Integer> y = LazyHelp.bind(x, x_ -> x_ * 2);
         assertEquals(2, (int) LazyHelp.force(y));
     }
 
@@ -62,13 +54,7 @@ public class LazyHelpTest
     public void testBoundThunk() {
         final LateBound<Integer> x = LazyHelp.bindLater();
         final Lazy<Integer> a = LazyHelp.bind(1);
-        final Lazy<Integer> b = LazyHelp.bind(a, new Function<Integer, Integer>()
-        {
-            @Override
-            public Integer apply(Integer a) {
-                return a + 1;
-            }
-        });
+        final Lazy<Integer> b = LazyHelp.bind(a, a_ -> a_ + 1);
         x.bind(b);
         assertEquals(2, (int) LazyHelp.force(x));
     }
@@ -78,13 +64,7 @@ public class LazyHelpTest
         final int N = 1_000_000;
         Lazy<Integer> x = LazyHelp.bind(0);
         for (int i = 0; i < N; ++i) {
-            x = LazyHelp.bind(x, new Function<Integer, Integer>()
-            {
-                @Override
-                public Integer apply(Integer x) {
-                    return x + 1;
-                }
-            });
+            x = LazyHelp.bind(x, x_ -> x_ + 1);
         }
         assertEquals(N, (int) LazyHelp.force(x));
     }

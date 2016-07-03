@@ -2,9 +2,9 @@ package com.jfreeman.lazy;
 
 import java.util.ArrayDeque;
 import java.util.Iterator;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
-import com.jfreeman.function.BiFunction;
-import com.jfreeman.function.Function;
 import com.jfreeman.function.QuadFunction;
 import com.jfreeman.function.TriFunction;
 
