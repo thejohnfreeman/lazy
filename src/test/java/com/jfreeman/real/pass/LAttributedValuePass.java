@@ -77,28 +77,28 @@ public class LAttributedValuePass
 
         @Override
         protected void annotate(FloatingPointProduction node) {
-            _val.set(node, LazyHelp.bind(
+            _val.set(node, LazyHelp.delay(
                 _val.get(node.left()),
                 _val.get(node.right()),
                 (l, r) -> l + r
             ));
-            _side.set(node.left(), LazyHelp.bind(Side.LEFT));
-            _side.set(node.right(), LazyHelp.bind(Side.RIGHT));
+            _side.set(node.left(), LazyHelp.delay(Side.LEFT));
+            _side.set(node.right(), LazyHelp.delay(Side.RIGHT));
         }
 
         @Override
         protected void annotate(IntegerProduction node) {
             _val.set(node, _val.get(node.list()));
-            _side.set(node.list(), LazyHelp.bind(Side.LEFT));
+            _side.set(node.list(), LazyHelp.delay(Side.LEFT));
         }
 
         @Override
         protected void annotate(ConsProduction node) {
-            _len.set(node, LazyHelp.bind(
+            _len.set(node, LazyHelp.delay(
                 _len.get(node.head()),
                 len -> len + 1
             ));
-            _val.set(node, LazyHelp.bind(
+            _val.set(node, LazyHelp.delay(
                 _side.get(node),
                 _val.get(node.head()),
                 _val.get(node.tail()),
@@ -112,8 +112,8 @@ public class LAttributedValuePass
 
         @Override
         protected void annotate(SingletonProduction node) {
-            _len.set(node, LazyHelp.bind(1));
-            _val.set(node, LazyHelp.bind(
+            _len.set(node, LazyHelp.delay(1));
+            _val.set(node, LazyHelp.delay(
                 _val.get(node.digit()),
                 _side.get(node),
                 (v, side) -> (side == Side.RIGHT) ? v / BASE : v
@@ -122,7 +122,7 @@ public class LAttributedValuePass
 
         @Override
         protected void annotate(DigitNode node) {
-            _val.set(node, LazyHelp.bind((double) node.value()));
+            _val.set(node, LazyHelp.delay((double) node.value()));
         }
     }
 }

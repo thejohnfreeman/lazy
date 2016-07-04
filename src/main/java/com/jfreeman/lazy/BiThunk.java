@@ -8,17 +8,19 @@ import com.google.common.collect.ImmutableList;
 /**
  * A lazy value with two dependencies.
  *
- * @param <T> the type of the value.
- * @param <A> the type of the first dependency.
- * @param <B> the type of the second dependency.
+ * @param <T> the type of the value
+ * @param <A> the type of the first dependency
+ * @param <B> the type of the second dependency
  * @author jfreeman
  */
 class BiThunk<T, A, B>
     implements Lazy<T>
 {
-    private final Lazy<A> _depA;
-    private final Lazy<B> _depB;
+    private Lazy<A> _depA;
+    private Lazy<B> _depB;
+    /** @see Thunk#_func */
     private BiFunction<A, B, T> _func;
+    /** @see Thunk#_value */
     private T _value = null;
 
     private BiThunk(Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func) {
@@ -27,27 +29,31 @@ class BiThunk<T, A, B>
         _func = func;
     }
 
-    public static <T, A, B> BiThunk<T, A, B> create(
+    public static <T, A, B> BiThunk<T, A, B> of(
         Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func)
     {
         return new BiThunk<>(a, b, func);
     }
 
     @Override
-    public List<Lazy<?>> getDependencies() {
+    public boolean isForced() {
+        return _func == null;
+    }
+
+    @Override
+    public List<Lazy<?>> getDependencies()
+        throws IllegalStateException
+    {
+        if (isForced()) {
+            throw new IllegalStateException("already forced");
+        }
         return ImmutableList.of(_depA, _depB);
     }
 
     @Override
-    public T getValue() throws IllegalStateException {
-        if (!isForced()) {
-            throw new IllegalStateException("not yet forced");
-        }
-        return _value;
-    }
-
-    @Override
-    public T force() throws IllegalStateException {
+    public T force()
+        throws IllegalStateException
+    {
         if (isForced()) {
             throw new IllegalStateException("already forced");
         }
@@ -55,11 +61,18 @@ class BiThunk<T, A, B>
         final B b = _depB.getValue();
         _value = _func.apply(a, b);
         _func = null;
+        _depA = null;
+        _depB = null;
         return _value;
     }
 
     @Override
-    public boolean isForced() {
-        return _func == null;
+    public T getValue()
+        throws IllegalStateException
+    {
+        if (!isForced()) {
+            throw new IllegalStateException("not yet forced");
+        }
+        return _value;
     }
 }

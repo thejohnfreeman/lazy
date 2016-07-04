@@ -17,7 +17,7 @@ public class InheritedAttribute<N, T>
     private LateBound<T> getOrCreate(N node) {
         LateBound<T> attr = _attrs.get(node);
         if (attr == null) {
-            attr = LateBound.<T>create();
+            attr = LateBound.<T>of();
             _attrs.put(node, attr);
         }
         return attr;

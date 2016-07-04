@@ -13,46 +13,46 @@ import com.jfreeman.function.TriFunction;
  */
 public final class LazyHelp
 {
-
     /** Just a namespace, so no constructor. */
     private LazyHelp() {}
 
-    public static <T> Lazy<T> bind(T value) {
-        return Constant.create(value);
+    public static <T> LateBound<T> delay() {
+        return LateBound.of();
     }
 
-    public static <T, A> Lazy<T> bind(Lazy<A> a, Function<A, T> func) {
-        return Thunk.create(a, func);
+    public static <T> Lazy<T> delay(T value) {
+        return Constant.of(value);
     }
 
-    public static <T, A, B> Lazy<T> bind(
+    public static <T, A> Lazy<T> delay(Lazy<A> a, Function<A, T> func) {
+        return Thunk.of(a, func);
+    }
+
+    public static <T, A, B> Lazy<T> delay(
         Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func)
     {
-        return BiThunk.create(a, b, func);
+        return BiThunk.of(a, b, func);
     }
 
-    public static <T, A, B, C> Lazy<T> bind(
+    public static <T, A, B, C> Lazy<T> delay(
         Lazy<A> a, Lazy<B> b, Lazy<C> c, TriFunction<A, B, C, T> func)
     {
-        return TriThunk.create(a, b, c, func);
+        return TriThunk.of(a, b, c, func);
     }
 
-    public static <T, A, B, C, D> Lazy<T> bind(
+    public static <T, A, B, C, D> Lazy<T> delay(
         Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d,
         QuadFunction<A, B, C, D, T> func)
     {
-        return QuadThunk.create(a, b, c, d, func);
-    }
-
-    public static <T> LateBound<T> bindLater() {
-        return LateBound.create();
+        return QuadThunk.of(a, b, c, d, func);
     }
 
     /**
      * When forced, a long chain of lazy values can cause a stack overflow.
      * This method forces a value iteratively.
-     * @param value the lazy value.
-     * @return the forced value.
+     *
+     * @param value the lazy value
+     * @return the forced value
      * @throws IllegalStateException
      */
     public static <T> T force(Lazy<T> value)
@@ -96,15 +96,15 @@ public final class LazyHelp
         implements Iterable<Lazy<?>>
     {
         public final Lazy<?> value;
-        private final Iterator<Lazy<?>> _it;
+        private Iterator<Lazy<?>> _it;
 
         public Context(Lazy<?> value) {
             this.value = value;
-            _it = value.getDependencies().iterator();
         }
 
         @Override
         public Iterator<Lazy<?>> iterator() {
+            _it = value.getDependencies().iterator();
             return _it;
         }
     }

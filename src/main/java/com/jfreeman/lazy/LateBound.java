@@ -5,47 +5,79 @@ import java.util.List;
 /**
  * A value whose provenance is unknown at construction.
  *
- * @param <T> the type of the value.
+ * @param <T> the type of the value
  * @author jfreeman
  */
 public class LateBound<T>
     implements Lazy<T>
 {
-    private Lazy<T> _value = null;
+    private Lazy<T> _value;
 
-    private LateBound() {}
-
-    public static <T> LateBound<T> create() {
-        return new LateBound<>();
+    private LateBound(Lazy<T> value) {
+        _value = value;
     }
 
     /**
-     * Bind the value. May only be called once.
-     * @param value the value this object should represent.
+     * Constructs and returns an unbound value.
+     *
+     * @param <T> the type of the value
+     * @return an unbound value
      */
-    public void bind(Lazy<T> value) {
-        if (_value != null) {
-            throw new IllegalStateException("already bound");
-        }
-        _value = value;
+    public static <T> LateBound<T> of() {
+        return new LateBound<>(null);
+    }
+
+    /**
+     * Constructs and returns a bound value.
+     *
+     * @param value a lazy value
+     * @param <T> the type of the value
+     * @return a bound value
+     */
+    public static <T> LateBound<T> of(Lazy<T> value) {
+        return new LateBound<>(value);
     }
 
     public boolean isBound() {
         return _value != null;
     }
 
-    @Override
-    public List<Lazy<?>> getDependencies() {
-        return isBound() ? _value.getDependencies() : null;
+    /**
+     * Binds the value. May only be called once.
+     *
+     * @param value a lazy value
+     * @return this object, for chaining
+     * @throws IllegalStateException if this value is already bound
+     */
+    public LateBound<T> bind(Lazy<T> value)
+        throws IllegalStateException
+    {
+        if (isBound()) {
+            throw new IllegalStateException("already bound");
+        }
+        _value = value;
+        return this;
     }
 
     @Override
-    public T getValue() throws IllegalStateException {
-        return _value.getValue();
+    public boolean isForced() {
+        return isBound() && _value.isForced();
     }
 
     @Override
-    public T force() throws IllegalStateException {
+    public List<Lazy<?>> getDependencies()
+        throws IllegalStateException
+    {
+        if (!isBound()) {
+            throw new IllegalStateException("unbound");
+        }
+        return _value.getDependencies();
+    }
+
+    @Override
+    public T force()
+        throws IllegalStateException
+    {
         if (!isBound()) {
             throw new IllegalStateException("unbound");
         }
@@ -53,7 +85,12 @@ public class LateBound<T>
     }
 
     @Override
-    public boolean isForced() {
-        return isBound() && _value.isForced();
+    public T getValue()
+        throws IllegalStateException
+    {
+        if (!isBound()) {
+            throw new IllegalStateException("unbound");
+        }
+        return _value.getValue();
     }
 }

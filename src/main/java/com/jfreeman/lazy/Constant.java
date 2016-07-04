@@ -2,10 +2,8 @@ package com.jfreeman.lazy;
 
 import java.util.List;
 
-import com.google.common.collect.ImmutableList;
-
 /**
- * A lazy constant has no dependencies.
+ * A lazy constant (i.e. a value with no dependencies).
  *
  * @author jfreeman
  */
@@ -18,27 +16,33 @@ class Constant<T>
         _value = value;
     }
 
-    public static <T> Constant<T> create(T value) {
+    public static <T> Constant<T> of(T value) {
         return new Constant<>(value);
-    }
-
-    @Override
-    public List<Lazy<?>> getDependencies() {
-        return ImmutableList.of();
-    }
-
-    @Override
-    public T getValue() throws IllegalStateException {
-        return _value;
-    }
-
-    @Override
-    public T force() throws IllegalStateException {
-        return _value;
     }
 
     @Override
     public boolean isForced() {
         return true;
+    }
+
+    @Override
+    public List<Lazy<?>> getDependencies()
+        throws IllegalStateException
+    {
+        throw new IllegalStateException("already forced");
+    }
+
+    @Override
+    public T force()
+        throws IllegalStateException
+    {
+        throw new IllegalStateException("already forced");
+    }
+
+    @Override
+    public T getValue()
+        throws IllegalStateException
+    {
+        return _value;
     }
 }

@@ -5,7 +5,11 @@ import java.util.List;
 /**
  * A lazy value with dependencies.
  * <p/>
- * A lazy value has no value until it is forced. A lazy value cannot be
+ * A lazy value is stateful. Before it is forced, it can return its
+ * dependencies, but not its value. After it is forced, it can return its value,
+ * but might not be able to return its (former) dependencies.
+ * <p/>
+ * A lazy value cannot be
  * forced until all of its dependencies are forced. An iterative algorithm
  * for forcing a directed acyclic graph of lazy values is provided in
  * {@link LazyHelp#force(Lazy)}. It is the recommended interface for forcing
@@ -17,32 +21,37 @@ import java.util.List;
  */
 public interface Lazy<T> {
     /**
-     * @return an immutable list of dependencies, or {@code null} if they are
-     * not known.
+     * Returns whether this value has been forced yet.
+     *
+     * @return {@code true} iff this value has been successfully forced
      */
-    List<Lazy<?>> getDependencies();
+    boolean isForced();
 
     /**
-     * Returns this value. May not be called until after evaluation is forced.
-     * @return the value.
-     * @throws IllegalStateException if {@code !isForced()}
-     * @see LazyHelp#force(Lazy)
+     * Returns an immutable list of this value's dependencies.
+     *
+     * @return an immutable list of this value's dependencies
+     * @throws IllegalStateException if {@code isForced()}
      */
-    T getValue() throws IllegalStateException;
+    List<Lazy<?>> getDependencies() throws IllegalStateException;
 
     /**
-     * Evaluate this value and return it. May be called repeatedly until it
+     * Evaluates and returns this value. May be called repeatedly until it
      * succeeds, but not once after.
-     * @return the value.
+     *
+     * @return the value
      * @throws IllegalStateException if any dependencies are unforced,
-     * or if this value was already successfully forced.
+     * or if this value was already successfully forced
      * @see LazyHelp#force(Lazy)
      */
     T force() throws IllegalStateException;
 
     /**
-     * Return whether this value has been forced yet.
-     * @return {@code true} iff this value has been successfully forced.
+     * Returns this value. May not be called until after evaluation is forced.
+     *
+     * @return the value
+     * @throws IllegalStateException if {@code !isForced()}
+     * @see LazyHelp#force(Lazy)
      */
-    boolean isForced();
+    T getValue() throws IllegalStateException;
 }
