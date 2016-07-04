@@ -96,7 +96,7 @@ public final class LazyHelp
         implements Iterable<Lazy<?>>
     {
         public final Lazy<?> value;
-        private Iterator<Lazy<?>> _it;
+        private Iterator<Lazy<?>> _it = null;
 
         public Context(Lazy<?> value) {
             this.value = value;
@@ -104,7 +104,9 @@ public final class LazyHelp
 
         @Override
         public Iterator<Lazy<?>> iterator() {
-            _it = value.getDependencies().iterator();
+            if (_it == null) {
+                _it = value.getDependencies().iterator();
+            }
             return _it;
         }
     }
