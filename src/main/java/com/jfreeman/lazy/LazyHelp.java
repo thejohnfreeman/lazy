@@ -51,9 +51,11 @@ public final class LazyHelp
      * When forced, a long chain of lazy values can cause a stack overflow.
      * This method forces a value iteratively.
      *
+     * @param <T> the type of the value
      * @param value the lazy value
      * @return the forced value
      * @throws IllegalStateException
+     *     if any value in the dependency graph cannot be evaluated
      */
     public static <T> T force(Lazy<T> value)
         throws IllegalStateException

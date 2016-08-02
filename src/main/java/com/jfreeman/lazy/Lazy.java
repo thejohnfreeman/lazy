@@ -4,17 +4,17 @@ import java.util.List;
 
 /**
  * A lazy value with dependencies.
- * <p/>
+ * <p>
  * A lazy value is stateful. Before it is forced, it can return its
  * dependencies, but not its value. After it is forced, it can return its value,
  * but might not be able to return its (former) dependencies.
- * <p/>
+ * <p>
  * A lazy value cannot be
  * forced until all of its dependencies are forced. An iterative algorithm
  * for forcing a directed acyclic graph of lazy values is provided in
  * {@link LazyHelp#force(Lazy)}. It is the recommended interface for forcing
  * evaluation.
- * <p/>
+ * <p>
  * Note: In generic implementing types from this package, the value type is
  * always the first type parameter, unlike functional interfaces, where the
  * result type is always the last type parameter.

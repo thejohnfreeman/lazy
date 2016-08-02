@@ -1,35 +1,84 @@
 apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
-configurations {
-    checker
-}
+group = 'com.thejohnfreeman'
+version = '0.1.0'
+sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    checker 'org.checkerframework:checker:1.9.6'
-    checker 'org.checkerframework:jdk8:1.9.6'
-    compile configurations.checker.dependencies
     compile 'com.google.guava:guava:19.0'
     testCompile 'junit:junit:4.12'
 }
 
-tasks.withType(Test) {
-    scanForTestClasses = false
-    include '**/*Test.class'
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier 'javadoc'
+    from tasks.javadoc.destinationDir
 }
 
-/* allprojects { */
-/*     tasks.withType(JavaCompile).all { JavaCompile compile -> */
-/*         compile.options.debug = true */
-/*         compile.options.compilerArgs = [ */
-/*             "-Xbootclasspath/p:${configurations.checker.asPath}", */
-/*             '-processor', 'org.checkerframework.checker.nullness.NullnessChecker', */
-/*             '-implicit:class', */
-/*             '-AprintErrorStack' */
-/*         ] */
-/*     } */
-/* } */
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
 
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+artifacts {
+    archives jar
+    archives javadocJar
+    archives sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment {
+                MavenDeployment deployment -> signing.signPom(deployment)
+            }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            pom.project {
+                name 'lazy'
+                packaging 'jar'
+                description 'A library for type-safe, tractable lazy evaluation and late binding in Java.'
+                url 'https://github.com/thejohnfreeman/lazy'
+
+                scm {
+                    connection 'https://github.com/thejohnfreeman/lazy.git'
+                    url 'https://github.com/thejohnfreeman/lazy'
+                }
+
+                licenses {
+                    license {
+                        name 'The MIT License (MIT)'
+                        url 'https://github.com/thejohnfreeman/lazy/blob/master/LICENSE'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'thejohnfreeman'
+                        name 'John Freeman'
+                        email 'jfreeman08@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+}
