@@ -16,7 +16,7 @@ import com.jfreeman.function.QuadFunction;
  * @param <D> the type of the fourth dependency
  * @author jfreeman
  */
-public class QuadThunk<T, A, B, C, D>
+public final class QuadThunk<T, A, B, C, D>
     implements Lazy<T>
 {
     private Lazy<A> _depA;

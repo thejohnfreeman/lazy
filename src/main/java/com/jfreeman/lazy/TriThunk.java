@@ -15,7 +15,7 @@ import com.jfreeman.function.TriFunction;
  * @param <C> the type of the third dependency
  * @author jfreeman
  */
-class TriThunk<T, A, B, C>
+public final class TriThunk<T, A, B, C>
     implements Lazy<T>
 {
     private Lazy<A> _depA;

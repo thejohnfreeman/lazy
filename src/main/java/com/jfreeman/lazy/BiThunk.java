@@ -13,7 +13,7 @@ import com.google.common.collect.ImmutableList;
  * @param <B> the type of the second dependency
  * @author jfreeman
  */
-class BiThunk<T, A, B>
+public final class BiThunk<T, A, B>
     implements Lazy<T>
 {
     private Lazy<A> _depA;

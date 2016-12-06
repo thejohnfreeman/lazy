@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author jfreeman
  */
-class Constant<T>
+public final class Constant<T>
     implements Lazy<T>
 {
     private final T _value;

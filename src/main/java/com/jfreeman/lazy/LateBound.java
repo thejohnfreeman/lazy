@@ -8,7 +8,7 @@ import java.util.List;
  * @param <T> the type of the value
  * @author jfreeman
  */
-public class LateBound<T>
+public final class LateBound<T>
     implements Lazy<T>
 {
     private Lazy<T> _value;

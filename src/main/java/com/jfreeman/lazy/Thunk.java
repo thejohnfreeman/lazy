@@ -12,7 +12,7 @@ import com.google.common.collect.ImmutableList;
  * @param <A> the type of the dependency
  * @author jfreeman
  */
-class Thunk<T, A>
+public final class Thunk<T, A>
     implements Lazy<T>
 {
     private Lazy<A> _dep;
