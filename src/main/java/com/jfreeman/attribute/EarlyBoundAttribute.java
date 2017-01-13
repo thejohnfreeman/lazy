@@ -6,9 +6,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.jfreeman.lazy.Lazy;
 
 /**
+ * An attribute that is always written before it is read.
+ *
  * @author jfreeman
  */
-public class SynthesizedAttribute<N, T>
+public class EarlyBoundAttribute<N, T>
     implements Attribute<N, T>
 {
     private final Map<N, Lazy<T>> _attrs = new ConcurrentHashMap<>();
@@ -17,7 +19,7 @@ public class SynthesizedAttribute<N, T>
      * {@inheritDoc}
      *
      * May not be called for a node until after its value has been
-     * {@link #set(Object, Lazy)}.
+     * {@link #put(Object, Lazy)}.
      */
     @Override
     public Lazy<T> get(N node) {
@@ -30,7 +32,7 @@ public class SynthesizedAttribute<N, T>
      * Must be called before {@link #get(Object)} for the same node.
      */
     @Override
-    public void set(N node, Lazy<T> value) {
+    public void put(N node, Lazy<T> value) {
         _attrs.put(node, value);
     }
 }

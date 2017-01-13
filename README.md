@@ -9,3 +9,14 @@ A library for type-safe, tractable lazy evaluation and late binding in Java.
     <version>0.2.0</version>
 </dependency>
 ```
+
+Compare:
+
+- [totallylazy](https://github.com/bodar/totallylazy)
+
+  Actively developed, but almost no documentation at the moment. Might be
+  worth contributing to that instead of this.
+
+- [java.util.concurrent.CompletableFuture](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html)
+
+  Does not seem to handle multiple inputs, much less multiple outputs.

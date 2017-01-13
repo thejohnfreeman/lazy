@@ -1,8 +1,8 @@
 package com.jfreeman.real.pass;
 
 import com.jfreeman.attribute.Attribute;
-import com.jfreeman.attribute.InheritedAttribute;
-import com.jfreeman.attribute.SynthesizedAttribute;
+import com.jfreeman.attribute.LateBoundAttribute;
+import com.jfreeman.attribute.EarlyBoundAttribute;
 import com.jfreeman.lazy.LazyHelp;
 import com.jfreeman.real.syntax.ConsProduction;
 import com.jfreeman.real.syntax.DigitNode;
@@ -69,36 +69,36 @@ public class LAttributedValuePass
         extends AbstractPassVisitor
     {
         private Attribute<Node, Double> _val
-            = new SynthesizedAttribute<>();
+            = new EarlyBoundAttribute<>();
         private Attribute<ListNode, Integer> _len
-            = new SynthesizedAttribute<>();
+            = new EarlyBoundAttribute<>();
         private Attribute<ListNode, Side> _side
-            = new InheritedAttribute<>();
+            = new LateBoundAttribute<>();
 
         @Override
         protected void annotate(FloatingPointProduction node) {
-            _val.set(node, LazyHelp.delay(
+            _val.put(node, LazyHelp.delay(
                 _val.get(node.left()),
                 _val.get(node.right()),
                 (l, r) -> l + r
             ));
-            _side.set(node.left(), LazyHelp.delay(Side.LEFT));
-            _side.set(node.right(), LazyHelp.delay(Side.RIGHT));
+            _side.put(node.left(), LazyHelp.delay(Side.LEFT));
+            _side.put(node.right(), LazyHelp.delay(Side.RIGHT));
         }
 
         @Override
         protected void annotate(IntegerProduction node) {
-            _val.set(node, _val.get(node.list()));
-            _side.set(node.list(), LazyHelp.delay(Side.LEFT));
+            _val.put(node, _val.get(node.list()));
+            _side.put(node.list(), LazyHelp.delay(Side.LEFT));
         }
 
         @Override
         protected void annotate(ConsProduction node) {
-            _len.set(node, LazyHelp.delay(
+            _len.put(node, LazyHelp.delay(
                 _len.get(node.head()),
                 len -> len + 1
             ));
-            _val.set(node, LazyHelp.delay(
+            _val.put(node, LazyHelp.delay(
                 _side.get(node),
                 _val.get(node.head()),
                 _val.get(node.tail()),
@@ -107,13 +107,13 @@ public class LAttributedValuePass
                        ? h * BASE + t
                        : h + t / Math.pow(BASE, len)
             ));
-            _side.set(node.head(), _side.get(node));
+            _side.put(node.head(), _side.get(node));
         }
 
         @Override
         protected void annotate(SingletonProduction node) {
-            _len.set(node, LazyHelp.delay(1));
-            _val.set(node, LazyHelp.delay(
+            _len.put(node, LazyHelp.delay(1));
+            _val.put(node, LazyHelp.delay(
                 _val.get(node.digit()),
                 _side.get(node),
                 (v, side) -> (side == Side.RIGHT) ? v / BASE : v
@@ -122,7 +122,7 @@ public class LAttributedValuePass
 
         @Override
         protected void annotate(DigitNode node) {
-            _val.set(node, LazyHelp.delay((double) node.value()));
+            _val.put(node, LazyHelp.delay((double) node.value()));
         }
     }
 }

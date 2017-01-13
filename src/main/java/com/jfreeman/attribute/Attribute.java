@@ -8,5 +8,5 @@ import com.jfreeman.lazy.Lazy;
 public interface Attribute<N, T>
 {
     Lazy<T> get(N node);
-    void set(N node, Lazy<T> value);
+    void put(N node, Lazy<T> value);
 }
