@@ -1,5 +1,6 @@
 A library for type-safe, tractable lazy evaluation and late binding in Java.
 
+[![Build Status](https://travis-ci.org/thejohnfreeman/lazy.svg?branch=master)](https://travis-ci.org/thejohnfreeman/lazy)
 [![Javadocs](http://javadoc.io/badge/com.thejohnfreeman/lazy.svg)](http://javadoc.io/doc/com.thejohnfreeman/lazy)
 
 ```xml
