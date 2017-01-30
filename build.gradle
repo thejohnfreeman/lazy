@@ -40,6 +40,7 @@ artifacts {
 
 signing {
     sign configurations.archives
+    required System.env.TRAVIS != "true"
 }
 
 uploadArchives {
