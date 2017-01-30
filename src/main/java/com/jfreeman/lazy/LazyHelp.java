@@ -95,10 +95,10 @@ public final class LazyHelp
      * all of the dependencies have been forced, the value is forced.
      */
     private static class Context
-        implements Iterable<Lazy<?>>
+        implements Iterable<Lazy<?>>, Iterator<Lazy<?>>
     {
         public final Lazy<?> value;
-        private Iterator<Lazy<?>> _it = null;
+        private Iterator<? extends Lazy<?>> _iterator = null;
 
         public Context(Lazy<?> value) {
             this.value = value;
@@ -106,10 +106,20 @@ public final class LazyHelp
 
         @Override
         public Iterator<Lazy<?>> iterator() {
-            if (_it == null) {
-                _it = value.getDependencies().iterator();
+            if (_iterator == null) {
+                _iterator = value.getDependencies().iterator();
             }
-            return _it;
+            return this;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return _iterator.hasNext();
+        }
+
+        @Override
+        public Lazy<?> next() {
+            return _iterator.next();
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.jfreeman.lazy;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -49,7 +48,7 @@ public class Output<T>
     }
 
     @Override
-    public List<Lazy<?>> getDependencies()
+    public Iterable<? extends Lazy<?>> getDependencies()
         throws IllegalStateException
     {
         return _method.getInputs();

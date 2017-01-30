@@ -1,6 +1,5 @@
 package com.jfreeman.lazy;
 
-import java.util.List;
 import java.util.function.BiFunction;
 
 import com.google.common.collect.ImmutableList;
@@ -41,7 +40,7 @@ public final class BiThunk<T, A, B>
     }
 
     @Override
-    public List<Lazy<?>> getDependencies()
+    public Iterable<? extends Lazy<?>> getDependencies()
         throws IllegalStateException
     {
         if (isForced()) {

@@ -1,6 +1,5 @@
 package com.jfreeman.lazy;
 
-import java.util.List;
 import java.util.function.Function;
 
 import com.google.common.collect.ImmutableList;
@@ -45,7 +44,7 @@ public final class Thunk<T, A>
     }
 
     @Override
-    public List<Lazy<?>> getDependencies()
+    public Iterable<? extends Lazy<?>> getDependencies()
         throws IllegalStateException
     {
         if (isForced()) {

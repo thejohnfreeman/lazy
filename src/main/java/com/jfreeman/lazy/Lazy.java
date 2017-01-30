@@ -1,7 +1,5 @@
 package com.jfreeman.lazy;
 
-import java.util.List;
-
 /**
  * A lazy value with dependencies.
  * <p>
@@ -33,7 +31,7 @@ public interface Lazy<T> {
      * @return an immutable list of this value's dependencies
      * @throws IllegalStateException if {@code isForced()}
      */
-    List<Lazy<?>> getDependencies() throws IllegalStateException;
+    Iterable<? extends Lazy<?>> getDependencies() throws IllegalStateException;
 
     /**
      * Evaluates and returns this value. May be called repeatedly until it

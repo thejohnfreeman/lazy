@@ -1,7 +1,5 @@
 package com.jfreeman.lazy;
 
-import java.util.List;
-
 /**
  * A value whose provenance is unknown at construction.
  *
@@ -65,7 +63,7 @@ public final class LateBound<T>
     }
 
     @Override
-    public List<Lazy<?>> getDependencies()
+    public Iterable<? extends Lazy<?>> getDependencies()
         throws IllegalStateException
     {
         if (!isBound()) {

@@ -1,7 +1,5 @@
 package com.jfreeman.lazy;
 
-import java.util.List;
-
 /**
  * A lazy constant (i.e. a value with no dependencies).
  *
@@ -26,7 +24,7 @@ public final class Constant<T>
     }
 
     @Override
-    public List<Lazy<?>> getDependencies()
+    public Iterable<? extends Lazy<?>> getDependencies()
         throws IllegalStateException
     {
         throw new IllegalStateException("already forced");

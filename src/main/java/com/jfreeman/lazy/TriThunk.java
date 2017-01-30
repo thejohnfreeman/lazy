@@ -1,7 +1,5 @@
 package com.jfreeman.lazy;
 
-import java.util.List;
-
 import com.google.common.collect.ImmutableList;
 
 import com.jfreeman.function.TriFunction;
@@ -47,7 +45,7 @@ public final class TriThunk<T, A, B, C>
     }
 
     @Override
-    public List<Lazy<?>> getDependencies()
+    public Iterable<? extends Lazy<?>> getDependencies()
         throws IllegalStateException
     {
         if (isForced()) {
