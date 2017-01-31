@@ -20,27 +20,27 @@ public final class LazyHelp
         return LateBound.of();
     }
 
-    public static <T> Lazy<T> delay(T value) {
+    public static <T> AbstractThunk<T> delay(T value) {
         return Constant.of(value);
     }
 
-    public static <T, A> Lazy<T> delay(Lazy<A> a, Function<A, T> func) {
+    public static <T, A> AbstractThunk<T> delay(Lazy<A> a, Function<A, T> func) {
         return Thunk.of(a, func);
     }
 
-    public static <T, A, B> Lazy<T> delay(
+    public static <T, A, B> AbstractThunk<T> delay(
         Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func)
     {
         return BiThunk.of(a, b, func);
     }
 
-    public static <T, A, B, C> Lazy<T> delay(
+    public static <T, A, B, C> AbstractThunk<T> delay(
         Lazy<A> a, Lazy<B> b, Lazy<C> c, TriFunction<A, B, C, T> func)
     {
         return TriThunk.of(a, b, c, func);
     }
 
-    public static <T, A, B, C, D> Lazy<T> delay(
+    public static <T, A, B, C, D> AbstractThunk<T> delay(
         Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d,
         QuadFunction<A, B, C, D, T> func)
     {
