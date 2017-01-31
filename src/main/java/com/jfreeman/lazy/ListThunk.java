@@ -11,11 +11,10 @@ import java.util.stream.Collectors;
  * @param <E> the element type of the list
  */
 public class ListThunk<T, E>
-    implements Lazy<T>
+    extends AbstractThunk<T>
 {
     private List<Lazy<E>> _deps;
     private Function<List<E>, T> _func;
-    private T _value = null;
 
     private ListThunk(
         List<Lazy<E>> dependencies, Function<List<E>, T> function)
@@ -71,16 +70,6 @@ public class ListThunk<T, E>
         _value = _func.apply(args);
         _func = null;
         _deps = null;
-        return _value;
-    }
-
-    @Override
-    public T getValue()
-        throws IllegalStateException
-    {
-        if (!isForced()) {
-            throw new IllegalStateException("value not ready; have you forced?");
-        }
         return _value;
     }
 }

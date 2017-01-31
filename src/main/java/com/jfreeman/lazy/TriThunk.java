@@ -14,15 +14,13 @@ import com.jfreeman.function.TriFunction;
  * @author jfreeman
  */
 public final class TriThunk<T, A, B, C>
-    implements Lazy<T>
+    extends AbstractThunk<T>
 {
     private Lazy<A> _depA;
     private Lazy<B> _depB;
     private Lazy<C> _depC;
     /** @see Thunk#_func */
     private TriFunction<A, B, C, T> _func;
-    /** @see Thunk#_value */
-    private T _value = null;
 
     private TriThunk(
         Lazy<A> a, Lazy<B> b, Lazy<C> c, TriFunction<A, B, C, T> func)
@@ -69,16 +67,6 @@ public final class TriThunk<T, A, B, C>
         _depA = null;
         _depB = null;
         _depC = null;
-        return _value;
-    }
-
-    @Override
-    public T getValue()
-        throws IllegalStateException
-    {
-        if (!isForced()) {
-            throw new IllegalStateException("not yet forced");
-        }
         return _value;
     }
 }

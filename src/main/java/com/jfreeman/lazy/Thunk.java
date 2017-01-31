@@ -12,7 +12,7 @@ import com.google.common.collect.ImmutableList;
  * @author jfreeman
  */
 public final class Thunk<T, A>
-    implements Lazy<T>
+    extends AbstractThunk<T>
 {
     private Lazy<A> _dep;
     /**
@@ -23,11 +23,6 @@ public final class Thunk<T, A>
      * function to be garbage-collected).
      */
     private Function<A, T> _func;
-    /**
-     * A null _value does not mean it has not been computed. For that, call
-     * {@link #isForced()}.
-     */
-    private T _value = null;
 
     private Thunk(Lazy<A> dep, Function<A, T> func) {
         _dep = dep;
@@ -63,16 +58,6 @@ public final class Thunk<T, A>
         _value = _func.apply(_dep.getValue());
         _func = null;
         _dep = null;
-        return _value;
-    }
-
-    @Override
-    public T getValue()
-        throws IllegalStateException
-    {
-        if (!isForced()) {
-            throw new IllegalStateException("not yet forced");
-        }
         return _value;
     }
 }

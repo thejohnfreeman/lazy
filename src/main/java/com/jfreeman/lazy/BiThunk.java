@@ -13,14 +13,12 @@ import com.google.common.collect.ImmutableList;
  * @author jfreeman
  */
 public final class BiThunk<T, A, B>
-    implements Lazy<T>
+    extends AbstractThunk<T>
 {
     private Lazy<A> _depA;
     private Lazy<B> _depB;
     /** @see Thunk#_func */
     private BiFunction<A, B, T> _func;
-    /** @see Thunk#_value */
-    private T _value = null;
 
     private BiThunk(Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func) {
         _depA = a;
@@ -62,16 +60,6 @@ public final class BiThunk<T, A, B>
         _func = null;
         _depA = null;
         _depB = null;
-        return _value;
-    }
-
-    @Override
-    public T getValue()
-        throws IllegalStateException
-    {
-        if (!isForced()) {
-            throw new IllegalStateException("not yet forced");
-        }
         return _value;
     }
 }

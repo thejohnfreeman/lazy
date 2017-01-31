@@ -15,14 +15,13 @@ import com.jfreeman.function.QuadFunction;
  * @author jfreeman
  */
 public final class QuadThunk<T, A, B, C, D>
-    implements Lazy<T>
+    extends AbstractThunk<T>
 {
     private Lazy<A> _depA;
     private Lazy<B> _depB;
     private Lazy<C> _depC;
     private Lazy<D> _depD;
     private QuadFunction<A, B, C, D, T> _func;
-    private T _value = null;
 
     private QuadThunk(
         Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d,
@@ -74,16 +73,6 @@ public final class QuadThunk<T, A, B, C, D>
         _depB = null;
         _depC = null;
         _depD = null;
-        return _value;
-    }
-
-    @Override
-    public T getValue()
-        throws IllegalStateException
-    {
-        if (!isForced()) {
-            throw new IllegalStateException("not yet forced");
-        }
         return _value;
     }
 }
