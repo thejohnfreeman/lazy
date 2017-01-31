@@ -43,6 +43,19 @@ signing {
     required System.env.TRAVIS != "true"
 }
 
+// To release a new version:
+// 1. Bump the version number in both build.gradle and README.md
+// 2. Commit the changes
+// 3. Tag the commit with the version number, prefixed with "v", e.g. "v1.0.0"
+// 4. Run `gradle uploadArchives`
+// 5. Follow the instructions at http://central.sonatype.org/pages/releasing-the-deployment.html
+// 6. Log into https://oss.sonatype.org/
+// 7. Navigate to the left hand side -> Build Promotion -> Staging Repositories
+// 8. In the top right, search for the group name ("com.thejohnfreeman")
+// 9. Select the staging repository
+// 10. Above the list of staging repositories, click Close
+// 11. Next to Close, click Refresh until the operation finishes
+// 12. Next to Close, click Release
 uploadArchives {
     repositories {
         mavenDeployer {
