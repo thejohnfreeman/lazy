@@ -4,7 +4,7 @@ apply plugin: 'signing'
 
 group = 'com.thejohnfreeman'
 // Update version in README too.
-version = '0.2.0'
+version = '0.3.0'
 sourceCompatibility = '1.8'
 
 repositories {
