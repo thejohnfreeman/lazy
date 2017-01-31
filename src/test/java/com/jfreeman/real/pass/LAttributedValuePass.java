@@ -13,43 +13,57 @@ import com.jfreeman.real.syntax.Node;
 import com.jfreeman.real.syntax.SingletonProduction;
 
 /**
+ * <pre>
  * syn S.val :: double
  * inh L.side :: left | right
  * syn L.len :: int
  * syn L.val :: double
  * syn B.val :: double
+ * </pre>
  *
- * Parameterize by base:
+ * <p>Parameterize by base:</p>
  *
+ * <pre>
  * double BASE = 2.0
+ * </pre>
  *
+ * <pre>
  * S -> L1 '.' L2
  * S.val = L1.val + L2.val
  * L1.side = left
  * L2.side = right
+ * </pre>
  *
+ * <pre>
  * S -> L
  * S.val = L.val
  * L.side = left
+ * </pre>
  *
+ * <pre>
  * L -> L1 B
  * L.len = L1.len + 1
  * L.val = (L.side == left)
- *   ? L1.val * BASE + B.val
- *   : L1.val        + B.val / pow(BASE, L.len)
+ *     ? L1.val * BASE + B.val
+ *     : L1.val        + B.val / pow(BASE, L.len)
  * L1.side = L.side
+ * </pre>
  *
+ * <pre>
  * L -> B
  * L.len = 1
  * L.val = { double v = B.val; if (L.side == right) { v /= BASE; } return v; }
+ * </pre>
  *
+ * <pre>
  * B -> 0
  * B.val = 0.0
+ * </pre>
  *
+ * <pre>
  * B -> 1
  * B.val = 1.0
- *
- * @author jfreeman
+ * </pre>
  */
 public class LAttributedValuePass
 {
