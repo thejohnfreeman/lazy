@@ -1,7 +1,8 @@
 A library for type-safe, tractable lazy evaluation and late binding in Java.
 
-[![Build Status](https://travis-ci.org/thejohnfreeman/lazy.svg?branch=master)](https://travis-ci.org/thejohnfreeman/lazy)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.thejohnfreeman/lazy/badge.svg)](http://search.maven.org/#search|gav|1|g%3A%22com.thejohnfreeman%22%20AND%20a%3A%22lazy%22)
 [![Javadocs](http://javadoc.io/badge/com.thejohnfreeman/lazy.svg)](http://javadoc.io/doc/com.thejohnfreeman/lazy)
+[![Build Status](https://travis-ci.org/thejohnfreeman/lazy.svg?branch=master)](https://travis-ci.org/thejohnfreeman/lazy)
 
 ```xml
 <dependency>
