@@ -5,3 +5,4 @@ script:
   - ./gradlew check jacocoTestReport
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  - ./gradlew coveralls

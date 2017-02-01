@@ -1,12 +1,15 @@
+plugins {
+    id 'java'
+    id 'maven'
+    id 'signing'
+    id 'checkstyle'
+    id 'jacoco'
+    id 'com.github.kt3k.coveralls' version '2.7.1'
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '3.3'
 }
-
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'signing'
-apply plugin: 'checkstyle'
-apply plugin: 'jacoco'
 
 group = 'com.thejohnfreeman'
 // Update version in README too.
