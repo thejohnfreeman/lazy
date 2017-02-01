@@ -42,7 +42,7 @@ public class LateBoundAttribute<N, T>
                 ((LateBound<T>)existing).bind(value);
             } else {
                 throw new IllegalArgumentException(String.format(
-                        "attribute already assigned:\n  key: %s\n  value: %s",
+                        "attribute already assigned:%n  key: %s%n  value: %s",
                         node, value));
             }
         }

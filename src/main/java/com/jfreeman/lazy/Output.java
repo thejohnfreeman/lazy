@@ -24,7 +24,7 @@ public class Output<T>
         Objects.requireNonNull(value);
         if (_value != null) {
             throw new UnsupportedOperationException(String.format(
-                    "output already assigned:\n  old: %s\n  new: %s",
+                    "output already assigned:%n  old: %s%n  new: %s",
                     _value, value));
         }
         _value = value;
