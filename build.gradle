@@ -3,6 +3,7 @@ plugins {
     id 'maven'
     id 'signing'
     id 'checkstyle'
+    id 'findbugs'
     id 'jacoco'
     id 'com.github.kt3k.coveralls' version '2.7.1'
 }
