@@ -4,6 +4,7 @@ plugins {
     id 'signing'
     id 'checkstyle'
     id 'findbugs'
+    id 'pmd'
     id 'jacoco'
     id 'com.github.kt3k.coveralls' version '2.7.1'
 }
