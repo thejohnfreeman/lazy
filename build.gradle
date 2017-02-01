@@ -12,21 +12,9 @@ repositories {
     mavenCentral()
 }
 
-configurations {
-    // The 'checkstyle' configuration has multiple jars in it. Create a new
-    // configuration just to name the one jar with our Checkstyle
-    // configuration in it.
-    // https://github.com/checkstyle/checkstyle/issues/305
-    // http://gradle-staging.discourse.org/t/checkstyle-how-to-use-an-official-style-configuration/6935
-    checkstyleConfig
-}
-
 dependencies {
     compile 'com.google.guava:guava:19.0'
     testCompile 'junit:junit:4.12'
-    checkstyleConfig('com.puppycrawl.tools:checkstyle:7.5') {
-      transitive = false
-    }
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
@@ -41,7 +29,7 @@ task sourcesJar(type: Jar) {
 
 checkstyle {
     toolVersion = '7.5'
-    config = resources.text.fromArchiveEntry(configurations.checkstyleConfig, 'google_checks.xml')
+    config = resources.text.fromFile('.checkstyle.xml')
 }
 
 test {
