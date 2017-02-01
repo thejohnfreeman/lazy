@@ -5,19 +5,17 @@ import java.util.function.BiFunction;
 import com.google.common.collect.ImmutableList;
 
 /**
- * A lazy value with two dependencies.
+ * A lazy value computed from two dependencies.
  *
  * @param <T> the type of the value
  * @param <A> the type of the first dependency
  * @param <B> the type of the second dependency
- * @author jfreeman
  */
 public final class BiThunk<T, A, B>
     extends AbstractThunk<T>
 {
     private Lazy<A> _depA;
     private Lazy<B> _depB;
-    /** @see Thunk#_func */
     private BiFunction<A, B, T> _func;
 
     private BiThunk(Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func) {

@@ -5,11 +5,10 @@ import java.util.function.Function;
 import com.google.common.collect.ImmutableList;
 
 /**
- * A lazy value with a single dependency.
+ * A lazy value computed from a single dependency.
  *
  * @param <T> the type of the value
  * @param <A> the type of the dependency
- * @author jfreeman
  */
 public final class Thunk<T, A>
     extends AbstractThunk<T>

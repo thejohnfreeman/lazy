@@ -2,8 +2,6 @@ package com.jfreeman.lazy;
 
 import java.util.Objects;
 
-/**
- */
 public class Output<T>
     implements Lazy<T>
 {
@@ -11,9 +9,9 @@ public class Output<T>
     private T _value = null;
 
     /**
-     * Set the method that writes to this output. Outputs are generally
-     * constructed before their method (so it knows what types to pass to its
-     * function).
+     * Set the method that writes to this output.
+     * Outputs are generally constructed before their method (so it knows
+     * what types to pass to its function).
      */
     public void setMethod(Method method) {
         _method = method;

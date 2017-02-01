@@ -1,8 +1,8 @@
 package com.jfreeman.real.pass;
 
 import com.jfreeman.attribute.Attribute;
-import com.jfreeman.attribute.LateBoundAttribute;
 import com.jfreeman.attribute.EarlyBoundAttribute;
+import com.jfreeman.attribute.LateBoundAttribute;
 import com.jfreeman.lazy.LazyHelp;
 import com.jfreeman.real.syntax.ConsProduction;
 import com.jfreeman.real.syntax.DigitNode;

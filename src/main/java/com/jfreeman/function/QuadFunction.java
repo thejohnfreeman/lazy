@@ -8,8 +8,8 @@ package com.jfreeman.function;
  * @param <V> the type of the third argument
  * @param <W> the type of the fourth argument
  * @param <R> the type of the result
- * @author jfreeman
  */
+@FunctionalInterface
 public interface QuadFunction<T, U, V, W, R>
 {
     R apply(T t, U u, V v, W w);

@@ -1,12 +1,11 @@
 package com.jfreeman.lazy;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-/**
- * @author jfreeman
- */
 public class LazyHelpTest
 {
     @Test
@@ -29,7 +28,7 @@ public class LazyHelpTest
         assertFalse(x.isForced());
     }
 
-    @Test(expected=IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void testForceUnbound() {
         final LateBound<Integer> x = LazyHelp.delay();
         x.force();

@@ -1,16 +1,17 @@
 package com.jfreeman.real;
 
+import static junit.framework.TestCase.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertEquals;
-
 import com.jfreeman.real.pass.LAttributedValuePass;
-import com.jfreeman.real.syntax.*;
+import com.jfreeman.real.syntax.ConsProduction;
+import com.jfreeman.real.syntax.DigitNode;
+import com.jfreeman.real.syntax.FloatingPointProduction;
+import com.jfreeman.real.syntax.SingletonProduction;
+import com.jfreeman.real.syntax.StartNode;
 
-/**
- * @author jfreeman
- */
 public class RealTest
 {
     StartNode _root;

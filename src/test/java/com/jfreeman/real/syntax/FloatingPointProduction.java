@@ -1,12 +1,10 @@
 package com.jfreeman.real.syntax;
 
-/**
- * @author jfreeman
- */
 public class FloatingPointProduction
     implements StartNode
 {
-    private final ListNode _left, _right;
+    private final ListNode _left;
+    private final ListNode _right;
 
     public FloatingPointProduction(ListNode left, ListNode right) {
         _left = left;

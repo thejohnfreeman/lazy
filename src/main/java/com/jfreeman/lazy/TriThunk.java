@@ -5,13 +5,12 @@ import com.google.common.collect.ImmutableList;
 import com.jfreeman.function.TriFunction;
 
 /**
- * A lazy value with three dependencies.
+ * A lazy value computed from three dependencies.
  *
  * @param <T> the type of the value
  * @param <A> the type of the first dependency
  * @param <B> the type of the second dependency
  * @param <C> the type of the third dependency
- * @author jfreeman
  */
 public final class TriThunk<T, A, B, C>
     extends AbstractThunk<T>
@@ -19,7 +18,6 @@ public final class TriThunk<T, A, B, C>
     private Lazy<A> _depA;
     private Lazy<B> _depB;
     private Lazy<C> _depC;
-    /** @see Thunk#_func */
     private TriFunction<A, B, C, T> _func;
 
     private TriThunk(

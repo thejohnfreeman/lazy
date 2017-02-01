@@ -1,9 +1,9 @@
 package com.jfreeman.lazy;
 
-import com.google.common.base.Joiner;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.common.base.Joiner;
 
 /**
  * Decorates a thunk with string tags for debugging.

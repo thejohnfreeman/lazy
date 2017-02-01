@@ -5,14 +5,13 @@ import com.google.common.collect.ImmutableList;
 import com.jfreeman.function.QuadFunction;
 
 /**
- * A lazy value with four dependencies.
+ * A lazy value computed from four dependencies.
  *
  * @param <T> the type of the value
  * @param <A> the type of the first dependency
  * @param <B> the type of the second dependency
  * @param <C> the type of the third dependency
  * @param <D> the type of the fourth dependency
- * @author jfreeman
  */
 public final class QuadThunk<T, A, B, C, D>
     extends AbstractThunk<T>

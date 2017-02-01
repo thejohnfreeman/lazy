@@ -1,13 +1,14 @@
 package com.jfreeman.lazy;
 
-import com.google.common.collect.ImmutableList;
-import org.hamcrest.CoreMatchers;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import com.google.common.collect.ImmutableList;
+import org.hamcrest.CoreMatchers;
+import org.junit.Test;
 
 public class ListThunkTest
 {

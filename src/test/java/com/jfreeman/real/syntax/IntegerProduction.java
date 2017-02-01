@@ -1,8 +1,5 @@
 package com.jfreeman.real.syntax;
 
-/**
- * @author jfreeman
- */
 public class IntegerProduction
     implements StartNode
 {

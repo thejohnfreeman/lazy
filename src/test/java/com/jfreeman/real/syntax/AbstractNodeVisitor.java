@@ -1,8 +1,5 @@
 package com.jfreeman.real.syntax;
 
-/**
- * @author jfreeman
- */
 public abstract class AbstractNodeVisitor
     implements NodeVisitor
 {

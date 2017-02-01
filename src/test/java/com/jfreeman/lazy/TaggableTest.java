@@ -1,17 +1,18 @@
 package com.jfreeman.lazy;
 
-import org.junit.Test;
-
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.junit.Assert.assertThat;
 
-public class TaggableTest {
+import org.junit.Test;
+
+public class TaggableTest
+{
     @Test
     public void testDebug() {
         final String str = Constant.of(1).debug().toString();
         assertThat(str, startsWith(
-            "[com.jfreeman.lazy.TaggableTest.testDebug() @ TaggableTest.java:12]"));
+            "[com.jfreeman.lazy.TaggableTest.testDebug() @ TaggableTest.java:13]"));
     }
 
     @Test

@@ -9,7 +9,8 @@ import java.util.List;
  * <p>This interface is more worried about convenience than performance since
  * its purpose is exclusively for debugging.</p>
  */
-public interface Taggable<T extends Taggable> {
+public interface Taggable<T extends Taggable>
+{
     T tag(final List<String> tags);
 
     default T tag(final String... tags) {

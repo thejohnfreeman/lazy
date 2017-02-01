@@ -18,6 +18,7 @@ public class EarlyBoundAttribute<N, T>
     /**
      * {@inheritDoc}
      *
+     * <p>
      * May not be called for a node until after its value has been
      * {@link #put(Object, Lazy)}.
      */
@@ -29,6 +30,7 @@ public class EarlyBoundAttribute<N, T>
     /**
      * {@inheritDoc}
      *
+     * <p>
      * Must be called before {@link #get(Object)} for the same node.
      */
     @Override

@@ -25,6 +25,7 @@ public class LateBoundAttribute<N, T>
     /**
      * {@inheritDoc}
      *
+     * <p>
      * May be called before the node's value has been
      * {@link #put(Object, Lazy)}.
      */
