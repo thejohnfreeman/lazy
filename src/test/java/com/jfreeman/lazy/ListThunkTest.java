@@ -13,7 +13,7 @@ import org.junit.Test;
 public class ListThunkTest
 {
     private <T> void assertListEquals(List<T> expected, List<Lazy<T>> lazies) {
-        final Lazy<List<T>> lazyList = ListThunk.of(lazies);
+        final Lazy<List<T>> lazyList = LazyHelp.sequence(lazies);
         final List<T> actual = LazyHelp.force(lazyList);
         assertThat(actual, CoreMatchers.is(expected));
     }
@@ -25,7 +25,7 @@ public class ListThunkTest
     }
 
     @Test
-    public void testSingletoneList() {
+    public void testSingletonList() {
         final List<Lazy<Integer>> lazies = ImmutableList.of(LazyHelp.delay(1));
         assertListEquals(ImmutableList.of(1), lazies);
     }
@@ -54,7 +54,7 @@ public class ListThunkTest
         final Lazy<Integer> two = LazyHelp.delay(one, x -> x + 1);
         final Lazy<Integer> three = LazyHelp.delay(two, x -> x + 1);
         final List<Lazy<Integer>> lazies = ImmutableList.of(one, two, three);
-        final Lazy<Integer> sum = ListThunk.of(lazies,
+        final Lazy<Integer> sum = LazyHelp.delay(lazies,
             l -> l.stream().mapToInt(Integer::intValue).sum());
         assertEquals(6, LazyHelp.force(sum).intValue());
     }

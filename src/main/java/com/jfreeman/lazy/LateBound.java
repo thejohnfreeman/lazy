@@ -7,9 +7,9 @@ package com.jfreeman.lazy;
  * @author jfreeman
  */
 public final class LateBound<T>
-    implements Lazy<T>
+    implements TaggableLazy<T>
 {
-    private Lazy<T> _value;
+    private Lazy<? extends T> _value;
 
     private LateBound(Lazy<T> value) {
         _value = value;
@@ -47,7 +47,7 @@ public final class LateBound<T>
      * @return this object, for chaining
      * @throws IllegalStateException if this value is already bound
      */
-    public LateBound<T> bind(Lazy<T> value)
+    public LateBound<T> bind(Lazy<? extends T> value)
         throws IllegalStateException
     {
         if (isBound()) {
@@ -90,5 +90,15 @@ public final class LateBound<T>
             throw new IllegalStateException("unbound");
         }
         return _value.getValue();
+    }
+
+    @Override
+    public String toStringUnforced(String name) {
+        return "(???) -> " + name;
+    }
+
+    @Override
+    public String toString() {
+        return isBound() ? _value.toString() : toStringUnforced("???");
     }
 }

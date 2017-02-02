@@ -1,41 +1,46 @@
 package com.jfreeman.lazy;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.startsWith;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 public class TaggableTest
 {
     @Test
-    public void testDebug() {
-        final String str = Constant.of(1).debug().toString();
-        assertThat(str, startsWith(
-            "[com.jfreeman.lazy.TaggableTest.testDebug() @ TaggableTest.java:13]"));
-    }
-
-    @Test
-    public void testWrappedClassNameUsed() {
-        final String str = Constant.of(1).tag().toString();
-        assertThat(str, containsString("Constant"));
-    }
-
-    @Test
     public void testTag() {
-        final String str = Constant.of(1).tag("one").toString();
-        assertThat(str, startsWith("[one]"));
+        final String expected =
+            "(???) -> xyz at TaggableTest.testTag() @ TaggableTest.java:14";
+        // The origin is the next line.
+        final Lazy<Object> lazy = LazyHelp.delay().tag("xyz");
+        assertEquals(expected, lazy.toString());
     }
 
     @Test
-    public void testTags() {
-        final String str = Constant.of(1).tag("one", "two").toString();
-        assertThat(str, startsWith("[one, two]"));
+    public void testTagWithExplicitStackLevel() {
+        final String expected =
+            "(???) -> xyz at TaggableTest.testTagWithExplicitStackLevel() @ TaggableTest.java:24";
+        final Lazy<Object> lazy = LazyHelp
+            // The origin is the next line.
+            .delay().tag("xyz", /* stackLevel: */0);
+        assertEquals(expected, lazy.toString());
+    }
+
+    private Lazy<Object> getTaggedLazy() {
+        return LazyHelp.delay().tag("xyz", /* stackLevel: */1);
     }
 
     @Test
-    public void testTagChain() {
-        final String str = Constant.of(1).tag("one").tag("two").toString();
-        assertThat(str, startsWith("[one, two]"));
+    public void testTagForCaller() {
+        final String expected =
+            "(???) -> xyz at TaggableTest.testTagForCaller() @ TaggableTest.java:37";
+        // The origin is the next line.
+        final Lazy<Object> lazy = getTaggedLazy();
+        assertEquals(expected, lazy.toString());
+    }
+
+    @Test
+    public void testForced() {
+        final Lazy<Integer> one = LazyHelp.delay(1).tag("one");
+        assertEquals("1", one.toString());
     }
 }

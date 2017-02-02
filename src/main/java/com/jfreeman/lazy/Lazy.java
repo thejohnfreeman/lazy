@@ -56,4 +56,8 @@ public interface Lazy<T>
      * @see LazyHelp#force(Lazy)
      */
     T getValue() throws IllegalStateException;
+
+    default String toStringUnforced(final String name) {
+        return "() -> " + name;
+    }
 }

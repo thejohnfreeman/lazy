@@ -37,7 +37,7 @@ public class ListThunk<T, E>
      * @param <E> the type of the values
      * @return a lazy list of values
      */
-    public static <E> ListThunk<List<E>, E> of(
+    public static <E> ListThunk<List<E>, E> sequence(
         List<Lazy<E>> dependencies)
     {
         return ListThunk.of(dependencies, x -> x);
@@ -71,5 +71,10 @@ public class ListThunk<T, E>
         _func = null;
         _deps = null;
         return _value;
+    }
+
+    @Override
+    public String toStringUnforced(final String name) {
+        return String.format("(List[%d]) -> %s", _deps.size(), name);
     }
 }

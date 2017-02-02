@@ -60,4 +60,9 @@ public final class BiThunk<T, A, B>
         _depB = null;
         return _value;
     }
+
+    @Override
+    public String toStringUnforced(final String name) {
+        return "(_2_) -> " + name;
+    }
 }

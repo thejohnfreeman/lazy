@@ -67,4 +67,9 @@ public final class TriThunk<T, A, B, C>
         _depC = null;
         return _value;
     }
+
+    @Override
+    public String toStringUnforced(final String name) {
+        return "(_3_) -> " + name;
+    }
 }

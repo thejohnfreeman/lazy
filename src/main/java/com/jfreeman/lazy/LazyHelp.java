@@ -2,6 +2,7 @@ package com.jfreeman.lazy;
 
 import java.util.ArrayDeque;
 import java.util.Iterator;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -45,6 +46,17 @@ public final class LazyHelp
         QuadFunction<A, B, C, D, T> func)
     {
         return QuadThunk.of(a, b, c, d, func);
+    }
+
+    public static <T, E> AbstractThunk<T> delay(
+        List<Lazy<E>> lazies,
+        Function<List<E>, T> func)
+    {
+        return ListThunk.of(lazies, func);
+    }
+
+    public static <T> AbstractThunk<List<T>> sequence(List<Lazy<T>> lazies) {
+        return ListThunk.sequence(lazies);
     }
 
     /**

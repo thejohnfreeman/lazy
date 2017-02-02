@@ -74,4 +74,9 @@ public final class QuadThunk<T, A, B, C, D>
         _depD = null;
         return _value;
     }
+
+    @Override
+    public String toStringUnforced(final String name) {
+        return "(_4_) -> " + name;
+    }
 }

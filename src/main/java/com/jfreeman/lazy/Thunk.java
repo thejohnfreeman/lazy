@@ -59,4 +59,9 @@ public final class Thunk<T, A>
         _dep = null;
         return _value;
     }
+
+    @Override
+    public String toStringUnforced(final String name) {
+        return "(_1_) -> " + name;
+    }
 }
