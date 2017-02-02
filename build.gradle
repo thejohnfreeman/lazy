@@ -42,9 +42,21 @@ checkstyle {
     config = resources.text.fromFile('.checkstyle.xml')
 }
 
+pmd {
+    consoleOutput = true
+    ruleSets = [
+      'java-basic',
+      'java-unusedcode',
+      'java-braces',
+      'java-design',
+      // TODO: Enable this ruleset and fix warnings.
+      //'java-optimizations'
+      ]
+}
+
 test {
     testLogging {
-        events "passed", "skipped", "failed"
+        events 'passed', 'skipped', 'failed'
     }
 }
 
