@@ -14,7 +14,7 @@ task wrapper(type: Wrapper) {
 }
 
 group = 'com.thejohnfreeman'
-version = '0.3.0'
+version = '0.4.0'
 sourceCompatibility = '1.8'
 
 repositories {
