@@ -67,13 +67,16 @@ import com.jfreeman.real.syntax.SingletonProduction;
  */
 public class LAttributedValuePass
 {
+    private static final double BASE = 2.0;
+
+    /** Just a namespace. */
+    private LAttributedValuePass() {}
+
     public static double evaluate(Node root) {
         Visitor visitor = new Visitor();
         root.accept(visitor);
         return LazyHelp.force(visitor._val.get(root));
     }
-
-    private static final double BASE = 2.0;
 
     private enum Side {
         LEFT, RIGHT;
@@ -82,11 +85,11 @@ public class LAttributedValuePass
     private static class Visitor
         extends AbstractPassVisitor
     {
-        private Attribute<Node, Double> _val
+        private final Attribute<Node, Double> _val
             = new EarlyBoundAttribute<>();
-        private Attribute<ListNode, Integer> _len
+        private final Attribute<ListNode, Integer> _len
             = new EarlyBoundAttribute<>();
-        private Attribute<ListNode, Side> _side
+        private final Attribute<ListNode, Side> _side
             = new LateBoundAttribute<>();
 
         @Override

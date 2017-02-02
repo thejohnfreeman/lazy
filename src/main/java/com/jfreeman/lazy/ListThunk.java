@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
  * @param <T> the type of the value
  * @param <E> the element type of the list
  */
-public class ListThunk<T, E>
+public final class ListThunk<T, E>
     extends AbstractThunk<T>
 {
     private List<Lazy<E>> _deps;
