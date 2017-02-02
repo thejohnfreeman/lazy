@@ -5,14 +5,6 @@ A library for type-safe, tractable lazy evaluation and late binding in Java.
 [![Build Status](https://travis-ci.org/thejohnfreeman/lazy.svg?branch=master)](https://travis-ci.org/thejohnfreeman/lazy)
 [![Coverage Status](https://coveralls.io/repos/github/thejohnfreeman/lazy/badge.svg?branch=master)](https://coveralls.io/github/thejohnfreeman/lazy?branch=master)
 
-```xml
-<dependency>
-    <groupId>com.thejohnfreeman</groupId>
-    <artifactId>lazy</artifactId>
-    <version>0.3.0</version>
-</dependency>
-```
-
 Compare:
 
 - [totallylazy](https://github.com/bodar/totallylazy)

@@ -14,7 +14,6 @@ task wrapper(type: Wrapper) {
 }
 
 group = 'com.thejohnfreeman'
-// Update version in README too.
 version = '0.3.0'
 sourceCompatibility = '1.8'
 
@@ -79,7 +78,7 @@ signing {
 }
 
 // To release a new version:
-// 1. Bump the version number in both build.gradle and README.md
+// 1. Bump the version number in build.gradle
 // 2. Commit the changes
 // 3. Tag the commit with the version number, prefixed with "v", e.g. "v1.0.0"
 // 4. Run `gradle uploadArchives`
