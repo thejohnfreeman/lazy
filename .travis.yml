@@ -1,6 +1,15 @@
 language: java
 jdk:
   - oraclejdk8
+
+# The default Oracle JDK is tragically outdated (1.8.0_31).
+# https://github.com/travis-ci/travis-ci/issues/3259
+sudo: false
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
 script:
   - ./gradlew check jacocoTestReport
 after_success:
