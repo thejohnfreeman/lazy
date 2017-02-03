@@ -1,5 +1,6 @@
 package com.jfreeman.lazy;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -10,23 +11,25 @@ import java.util.stream.Collectors;
  * @param <T> the type of the value
  * @param <E> the element type of the list
  */
-public final class ListThunk<T, E>
+public final class CollectionThunk<T, E>
     extends AbstractThunk<T>
 {
-    private List<Lazy<E>> _deps;
-    private Function<List<E>, T> _func;
+    private Collection<? extends Lazy<? extends E>> _deps;
+    private Function<? super Collection<E>, T> _func;
 
-    private ListThunk(
-        List<Lazy<E>> dependencies, Function<List<E>, T> function)
+    private CollectionThunk(
+        final Collection<? extends Lazy<? extends E>> dependencies,
+        final Function<? super Collection<E>, T> function)
     {
         this._deps = dependencies;
         this._func = function;
     }
 
-    public static <T, E> ListThunk<T, E> of(
-        List<Lazy<E>> dependencies, Function<List<E>, T> function)
+    public static <T, E> CollectionThunk<T, E> of(
+        final Collection<? extends Lazy<? extends E>> dependencies,
+        final Function<? super Collection<E>, T> function)
     {
-        return new ListThunk<>(dependencies, function);
+        return new CollectionThunk<>(dependencies, function);
     }
 
     /**
@@ -37,10 +40,10 @@ public final class ListThunk<T, E>
      * @param <E> the type of the values
      * @return a lazy list of values
      */
-    public static <E> ListThunk<List<E>, E> sequence(
-        List<Lazy<E>> dependencies)
+    public static <E> CollectionThunk<Collection<E>, E> sequence(
+        Collection<? extends Lazy<? extends E>> dependencies)
     {
-        return ListThunk.of(dependencies, x -> x);
+        return CollectionThunk.of(dependencies, x -> x);
     }
 
     @Override
@@ -65,8 +68,9 @@ public final class ListThunk<T, E>
         if (isForced()) {
             throw new IllegalStateException("already forced");
         }
-        final List<E> args =
-            _deps.stream().map(Lazy::getValue).collect(Collectors.toList());
+        final List<E> args = _deps.stream()
+            .map(Lazy::getValue)
+            .collect(Collectors.toList());
         _value = _func.apply(args);
         _func = null;
         _deps = null;

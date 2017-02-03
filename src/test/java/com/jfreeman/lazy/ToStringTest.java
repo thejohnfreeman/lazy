@@ -3,7 +3,7 @@ package com.jfreeman.lazy;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
@@ -122,19 +122,19 @@ public class ToStringTest
 
     @Test
     public void testListThunkUnforced() {
-        final List<Lazy<String>> lazies = ImmutableList.of(
+        final Collection<Lazy<String>> lazies = ImmutableList.of(
             LazyHelp.delay("alpha"), LazyHelp.delay("beta"));
-        final Lazy<List<String>> list = LazyHelp.sequence(lazies);
+        final Lazy<Collection<String>> list = LazyHelp.sequence(lazies);
         assertEquals("(List[2]) -> ...", list.toString());
     }
 
     @Test
     public void testListThunkForced() {
         // Use ArrayList just to show that it can pretty-print itself.
-        final List<Lazy<String>> lazies = new ArrayList<>();
+        final Collection<Lazy<String>> lazies = new ArrayList<>();
         lazies.add(LazyHelp.delay("alpha"));
         lazies.add(LazyHelp.delay("beta"));
-        final Lazy<List<String>> list = LazyHelp.sequence(lazies);
+        final Lazy<Collection<String>> list = LazyHelp.sequence(lazies);
         LazyHelp.force(list);
         assertEquals("[alpha, beta]", list.toString());
     }
