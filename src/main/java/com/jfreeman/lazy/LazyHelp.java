@@ -21,41 +21,41 @@ public final class LazyHelp
         return LateBound.of();
     }
 
-    public static <T> AbstractThunk<T> delay(T value) {
+    public static <T> TaggableLazy<T> delay(T value) {
         return Constant.of(value);
     }
 
-    public static <T, A> AbstractThunk<T> delay(Lazy<A> a, Function<A, T> func) {
+    public static <T, A> TaggableLazy<T> delay(Lazy<A> a, Function<A, T> func) {
         return Thunk.of(a, func);
     }
 
-    public static <T, A, B> AbstractThunk<T> delay(
+    public static <T, A, B> TaggableLazy<T> delay(
         Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func)
     {
         return BiThunk.of(a, b, func);
     }
 
-    public static <T, A, B, C> AbstractThunk<T> delay(
+    public static <T, A, B, C> TaggableLazy<T> delay(
         Lazy<A> a, Lazy<B> b, Lazy<C> c, TriFunction<A, B, C, T> func)
     {
         return TriThunk.of(a, b, c, func);
     }
 
-    public static <T, A, B, C, D> AbstractThunk<T> delay(
+    public static <T, A, B, C, D> TaggableLazy<T> delay(
         Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d,
         QuadFunction<A, B, C, D, T> func)
     {
         return QuadThunk.of(a, b, c, d, func);
     }
 
-    public static <T, E> AbstractThunk<T> delay(
+    public static <T, E> TaggableLazy<T> delay(
         List<Lazy<E>> lazies,
         Function<List<E>, T> func)
     {
         return ListThunk.of(lazies, func);
     }
 
-    public static <T> AbstractThunk<List<T>> sequence(List<Lazy<T>> lazies) {
+    public static <T> TaggableLazy<List<T>> sequence(List<Lazy<T>> lazies) {
         return ListThunk.sequence(lazies);
     }
 
