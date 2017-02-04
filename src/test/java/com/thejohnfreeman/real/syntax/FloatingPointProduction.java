@@ -6,7 +6,7 @@ public class FloatingPointProduction
     private final ListNode _left;
     private final ListNode _right;
 
-    public FloatingPointProduction(ListNode left, ListNode right) {
+    public FloatingPointProduction(final ListNode left, final ListNode right) {
         _left = left;
         _right = right;
     }
@@ -20,7 +20,7 @@ public class FloatingPointProduction
     }
 
     @Override
-    public void accept(NodeVisitor visitor) {
+    public void accept(final NodeVisitor visitor) {
         visitor.visit(this);
     }
 

@@ -13,14 +13,14 @@ public class Output<T>
      * Outputs are generally constructed before their method (so it knows
      * what types to pass to its function).
      */
-    public void setMethod(Method method) {
+    public void setMethod(final Method method) {
         _method = method;
     }
 
     /**
      * Assign the value from within a multi-output method.
      */
-    public void assign(T value) {
+    public void assign(final T value) {
         Objects.requireNonNull(value);
         if (_value != null) {
             throw new UnsupportedOperationException(String.format(

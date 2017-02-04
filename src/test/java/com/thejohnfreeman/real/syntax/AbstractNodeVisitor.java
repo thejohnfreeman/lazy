@@ -3,32 +3,32 @@ package com.thejohnfreeman.real.syntax;
 public abstract class AbstractNodeVisitor
     implements NodeVisitor
 {
-    protected void defaultVisit(Node node) {
+    protected void defaultVisit(final Node node) {
         throw new UnsupportedOperationException("not implemented");
     }
 
     @Override
-    public void visit(FloatingPointProduction node) {
+    public void visit(final FloatingPointProduction node) {
         defaultVisit(node);
     }
 
     @Override
-    public void visit(IntegerProduction node) {
+    public void visit(final IntegerProduction node) {
         defaultVisit(node);
     }
 
     @Override
-    public void visit(ConsProduction node) {
+    public void visit(final ConsProduction node) {
         defaultVisit(node);
     }
 
     @Override
-    public void visit(SingletonProduction node) {
+    public void visit(final SingletonProduction node) {
         defaultVisit(node);
     }
 
     @Override
-    public void visit(DigitNode node) {
+    public void visit(final DigitNode node) {
         defaultVisit(node);
     }
 }

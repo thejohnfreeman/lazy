@@ -18,7 +18,7 @@ public class LateBoundAttribute<N, T>
 {
     private final Map<N, Lazy<T>> _attrs = new ConcurrentHashMap<>();
 
-    private Lazy<T> getOrCreate(N node) {
+    private Lazy<T> getOrCreate(final N node) {
         return _attrs.computeIfAbsent(node, k -> LateBound.of());
     }
 
@@ -30,12 +30,12 @@ public class LateBoundAttribute<N, T>
      * {@link #put(Object, Lazy)}.
      */
     @Override
-    public Lazy<T> get(N node) {
+    public Lazy<T> get(final N node) {
         return getOrCreate(node);
     }
 
     @Override
-    public void put(N node, Lazy<T> value) {
+    public void put(final N node, final Lazy<T> value) {
         final Lazy<T> existing = _attrs.get(node);
         if (existing != null) {
             if (existing instanceof LateBound) {
@@ -52,7 +52,7 @@ public class LateBoundAttribute<N, T>
     /**
      * Return an output wrapper for a multi-output method.
      */
-    public Output<T> put(N node) {
+    public Output<T> put(final N node) {
         final Output<T> output = new Output<>();
         put(node, output);
         return output;

@@ -5,7 +5,7 @@ public class SingletonProduction
 {
     private final DigitNode _digit;
 
-    public SingletonProduction(DigitNode digit) {
+    public SingletonProduction(final DigitNode digit) {
         _digit = digit;
     }
 
@@ -14,7 +14,7 @@ public class SingletonProduction
     }
 
     @Override
-    public void accept(NodeVisitor visitor) {
+    public void accept(final NodeVisitor visitor) {
         visitor.visit(this);
     }
 

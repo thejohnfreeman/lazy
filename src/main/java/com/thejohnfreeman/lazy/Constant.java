@@ -6,11 +6,11 @@ package com.thejohnfreeman.lazy;
 public final class Constant<T>
     extends AbstractThunk<T>
 {
-    private Constant(T value) {
+    private Constant(final T value) {
         _value = value;
     }
 
-    public static <T> Constant<T> of(T value) {
+    public static <T> Constant<T> of(final T value) {
         return new Constant<>(value);
     }
 

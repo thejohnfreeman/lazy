@@ -23,56 +23,61 @@ public final class LazyHelp
         return LateBound.of();
     }
 
-    public static <T> TaggableLazy<T> delay(T value) {
+    public static <T> TaggableLazy<T> delay(final T value) {
         return Constant.of(value);
     }
 
-    public static <T, A> TaggableLazy<T> delay(Lazy<A> a, Function<A, T> func) {
+    public static <T, A> TaggableLazy<T> delay(
+        final Lazy<A> a, final Function<A, T> func)
+    {
         return Thunk1.of(a, func);
     }
 
     public static <T, A, B> TaggableLazy<T> delay(
-        Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func)
+        final Lazy<A> a, final Lazy<B> b, final BiFunction<A, B, T> func)
     {
         return Thunk2.of(a, b, func);
     }
 
     public static <T, A, B, C> TaggableLazy<T> delay(
-        Lazy<A> a, Lazy<B> b, Lazy<C> c, Function3<A, B, C, T> func)
+        final Lazy<A> a, final Lazy<B> b, final Lazy<C> c,
+        final Function3<A, B, C, T> func)
     {
         return Thunk3.of(a, b, c, func);
     }
 
     public static <T, A, B, C, D> TaggableLazy<T> delay(
-        Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d,
-        Function4<A, B, C, D, T> func)
+        final Lazy<A> a, final Lazy<B> b, final Lazy<C> c, final Lazy<D> d,
+        final Function4<A, B, C, D, T> func)
     {
         return Thunk4.of(a, b, c, d, func);
     }
 
     public static <T, A, B, C, D, E> TaggableLazy<T> delay(
-        Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d, Lazy<E> e,
-        Function5<A, B, C, D, E, T> func)
+        final Lazy<A> a, final Lazy<B> b, final Lazy<C> c, final Lazy<D> d,
+        final Lazy<E> e,
+        final Function5<A, B, C, D, E, T> func)
     {
         return Thunk5.of(a, b, c, d, e, func);
     }
 
     public static <T, A, B, C, D, E, F> TaggableLazy<T> delay(
-        Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d, Lazy<E> e, Lazy<F> f,
-        Function6<A, B, C, D, E, F, T> func)
+        final Lazy<A> a, final Lazy<B> b, final Lazy<C> c, final Lazy<D> d,
+        final Lazy<E> e, final Lazy<F> f,
+        final Function6<A, B, C, D, E, F, T> func)
     {
         return Thunk6.of(a, b, c, d, e, f, func);
     }
 
     public static <T, E> TaggableLazy<T> delay(
-        Collection<? extends Lazy<? extends E>> lazies,
-        Function<? super Collection<E>, T> func)
+        final Collection<? extends Lazy<? extends E>> lazies,
+        final Function<? super Collection<E>, T> func)
     {
         return CollectionThunk.of(lazies, func);
     }
 
     public static <T> TaggableLazy<Collection<T>> sequence(
-        Collection<? extends Lazy<? extends T>> lazies)
+        final Collection<? extends Lazy<? extends T>> lazies)
     {
         return CollectionThunk.sequence(lazies);
     }
@@ -87,10 +92,10 @@ public final class LazyHelp
      * @throws IllegalStateException
      *     if any value in the dependency graph cannot be evaluated
      */
-    public static <T> T force(Lazy<T> value)
+    public static <T> T force(final Lazy<T> value)
         throws IllegalStateException
     {
-        ArrayDeque<Context> values = new ArrayDeque<>();
+        final ArrayDeque<Context> values = new ArrayDeque<>();
         values.push(new Context(value));
 
         while (!values.isEmpty()) {
@@ -106,10 +111,10 @@ public final class LazyHelp
      * multi-level `break`. This particular case does not fit the labeled break
      * pattern for Java.
      */
-    private static void forceTop(ArrayDeque<Context> values) {
+    private static void forceTop(final ArrayDeque<Context> values) {
         final Context ctx = values.getFirst();
         if (!ctx.value.isForced()) {
-            for (Lazy<?> dep : ctx) {
+            for (final Lazy<?> dep : ctx) {
                 if (!dep.isForced()) {
                     values.push(new Context(dep));
                     return;
@@ -130,7 +135,7 @@ public final class LazyHelp
         public final Lazy<?> value;
         private Iterator<? extends Lazy<?>> _iterator = null;
 
-        public Context(Lazy<?> value) {
+        public Context(final Lazy<?> value) {
             this.value = value;
         }
 

@@ -23,12 +23,12 @@ public final class Thunk1<T, A>
      */
     private Function<A, T> _func;
 
-    private Thunk1(Lazy<A> dep, Function<A, T> func) {
+    private Thunk1(final Lazy<A> dep, final Function<A, T> func) {
         _dep = dep;
         _func = func;
     }
 
-    public static <T, A> Thunk1<T, A> of(Lazy<A> dep, Function<A, T> func) {
+    public static <T, A> Thunk1<T, A> of(final Lazy<A> dep, final Function<A, T> func) {
         return new Thunk1<>(dep, func);
     }
 

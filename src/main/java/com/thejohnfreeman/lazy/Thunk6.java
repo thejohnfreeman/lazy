@@ -27,8 +27,9 @@ public final class Thunk6<T, A, B, C, D, E, F>
     private Function6<A, B, C, D, E, F, T> _func;
 
     private Thunk6(
-        Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d, Lazy<E> e, Lazy<F> f,
-        Function6<A, B, C, D, E, F, T> func)
+        final Lazy<A> a, final Lazy<B> b, final Lazy<C> c, final Lazy<D> d,
+        final Lazy<E> e, final Lazy<F> f,
+        final Function6<A, B, C, D, E, F, T> func)
     {
         _depA = a;
         _depB = b;
@@ -40,8 +41,9 @@ public final class Thunk6<T, A, B, C, D, E, F>
     }
 
     public static <T, A, B, C, D, E, F> Thunk6<T, A, B, C, D, E, F> of(
-        Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d, Lazy<E> e, Lazy<F> f,
-        Function6<A, B, C, D, E, F, T> func)
+        final Lazy<A> a, final Lazy<B> b, final Lazy<C> c, final Lazy<D> d,
+        final Lazy<E> e, final Lazy<F> f,
+        final Function6<A, B, C, D, E, F, T> func)
     {
         return new Thunk6<>(a, b, c, d, e, f, func);
     }

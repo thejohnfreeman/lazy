@@ -21,33 +21,33 @@ public abstract class AbstractPassVisitor
     protected abstract void annotate(DigitNode node);
 
     @Override
-    public void visit(FloatingPointProduction node) {
+    public void visit(final FloatingPointProduction node) {
         node.left().accept(this);
         node.right().accept(this);
         annotate(node);
     }
 
     @Override
-    public void visit(IntegerProduction node) {
+    public void visit(final IntegerProduction node) {
         node.list().accept(this);
         annotate(node);
     }
 
     @Override
-    public void visit(ConsProduction node) {
+    public void visit(final ConsProduction node) {
         node.head().accept(this);
         node.tail().accept(this);
         annotate(node);
     }
 
     @Override
-    public void visit(SingletonProduction node) {
+    public void visit(final SingletonProduction node) {
         node.digit().accept(this);
         annotate(node);
     }
 
     @Override
-    public void visit(DigitNode node) {
+    public void visit(final DigitNode node) {
         annotate(node);
     }
 }

@@ -54,7 +54,7 @@ def pmdCommonRuleSet = [
       'java-finalizers',
       'java-imports',
       'java-logging-java',
-      //'java-optimizations',
+      // 'java-optimizations',
       'java-strictexception',
       'java-strings',
       'java-sunsecure',

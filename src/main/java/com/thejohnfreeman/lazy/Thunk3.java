@@ -21,7 +21,7 @@ public final class Thunk3<T, A, B, C>
     private Function3<A, B, C, T> _func;
 
     private Thunk3(
-        Lazy<A> a, Lazy<B> b, Lazy<C> c, Function3<A, B, C, T> func)
+        final Lazy<A> a, final Lazy<B> b, final Lazy<C> c, final Function3<A, B, C, T> func)
     {
         _depA = a;
         _depB = b;
@@ -30,7 +30,7 @@ public final class Thunk3<T, A, B, C>
     }
 
     public static <T, A, B, C> Thunk3<T, A, B, C> of(
-        Lazy<A> a, Lazy<B> b, Lazy<C> c, Function3<A, B, C, T> func)
+        final Lazy<A> a, final Lazy<B> b, final Lazy<C> c, final Function3<A, B, C, T> func)
     {
         return new Thunk3<>(a, b, c, func);
     }

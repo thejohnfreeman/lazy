@@ -25,8 +25,8 @@ public final class Thunk5<T, A, B, C, D, E>
     private Function5<A, B, C, D, E, T> _func;
 
     private Thunk5(
-        Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d, Lazy<E> e,
-        Function5<A, B, C, D, E, T> func)
+        final Lazy<A> a, final Lazy<B> b, final Lazy<C> c, final Lazy<D> d, final Lazy<E> e,
+        final Function5<A, B, C, D, E, T> func)
     {
         _depA = a;
         _depB = b;
@@ -37,8 +37,8 @@ public final class Thunk5<T, A, B, C, D, E>
     }
 
     public static <T, A, B, C, D, E> Thunk5<T, A, B, C, D, E> of(
-        Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d, Lazy<E> e,
-        Function5<A, B, C, D, E, T> func)
+        final Lazy<A> a, final Lazy<B> b, final Lazy<C> c, final Lazy<D> d, final Lazy<E> e,
+        final Function5<A, B, C, D, E, T> func)
     {
         return new Thunk5<>(a, b, c, d, e, func);
     }

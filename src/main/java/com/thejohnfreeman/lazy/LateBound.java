@@ -11,7 +11,7 @@ public final class LateBound<T>
 {
     private Lazy<? extends T> _value;
 
-    private LateBound(Lazy<T> value) {
+    private LateBound(final Lazy<T> value) {
         _value = value;
     }
 
@@ -32,7 +32,7 @@ public final class LateBound<T>
      * @param <T> the type of the value
      * @return a bound value
      */
-    public static <T> LateBound<T> of(Lazy<T> value) {
+    public static <T> LateBound<T> of(final Lazy<T> value) {
         return new LateBound<>(value);
     }
 
@@ -47,7 +47,7 @@ public final class LateBound<T>
      * @return this object, for chaining
      * @throws IllegalStateException if this value is already bound
      */
-    public LateBound<T> bind(Lazy<? extends T> value)
+    public LateBound<T> bind(final Lazy<? extends T> value)
         throws IllegalStateException
     {
         if (isBound()) {
@@ -93,7 +93,7 @@ public final class LateBound<T>
     }
 
     @Override
-    public String toStringUnforced(String name) {
+    public String toStringUnforced(final String name) {
         return "(???) -> " + name;
     }
 

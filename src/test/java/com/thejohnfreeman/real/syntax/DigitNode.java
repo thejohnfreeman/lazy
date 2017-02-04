@@ -11,7 +11,7 @@ public class DigitNode
 {
     private final int _value;
 
-    public DigitNode(int value) {
+    public DigitNode(final int value) {
         _value = value;
     }
 
@@ -20,7 +20,7 @@ public class DigitNode
     }
 
     @Override
-    public void accept(NodeVisitor visitor) {
+    public void accept(final NodeVisitor visitor) {
         visitor.visit(this);
     }
 

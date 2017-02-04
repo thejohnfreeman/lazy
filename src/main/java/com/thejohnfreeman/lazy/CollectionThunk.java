@@ -41,7 +41,7 @@ public final class CollectionThunk<T, E>
      * @return a lazy list of values
      */
     public static <E> CollectionThunk<Collection<E>, E> sequence(
-        Collection<? extends Lazy<? extends E>> dependencies)
+        final Collection<? extends Lazy<? extends E>> dependencies)
     {
         return CollectionThunk.of(dependencies, x -> x);
     }

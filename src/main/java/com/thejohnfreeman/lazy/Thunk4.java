@@ -23,8 +23,8 @@ public final class Thunk4<T, A, B, C, D>
     private Function4<A, B, C, D, T> _func;
 
     private Thunk4(
-        Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d,
-        Function4<A, B, C, D, T> func)
+        final Lazy<A> a, final Lazy<B> b, final Lazy<C> c, final Lazy<D> d,
+        final Function4<A, B, C, D, T> func)
     {
         _depA = a;
         _depB = b;
@@ -34,8 +34,8 @@ public final class Thunk4<T, A, B, C, D>
     }
 
     public static <T, A, B, C, D> Thunk4<T, A, B, C, D> of(
-        Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d,
-        Function4<A, B, C, D, T> func)
+        final Lazy<A> a, final Lazy<B> b, final Lazy<C> c, final Lazy<D> d,
+        final Function4<A, B, C, D, T> func)
     {
         return new Thunk4<>(a, b, c, d, func);
     }

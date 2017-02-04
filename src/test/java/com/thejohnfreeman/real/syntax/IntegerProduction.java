@@ -5,7 +5,7 @@ public class IntegerProduction
 {
     private final ListNode _list;
 
-    public IntegerProduction(ListNode list) {
+    public IntegerProduction(final ListNode list) {
         _list = list;
     }
 
@@ -14,7 +14,7 @@ public class IntegerProduction
     }
 
     @Override
-    public void accept(NodeVisitor visitor) {
+    public void accept(final NodeVisitor visitor) {
         visitor.visit(this);
     }
 

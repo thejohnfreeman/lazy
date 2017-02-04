@@ -72,8 +72,8 @@ public class LAttributedValuePass
     /** Just a namespace. */
     private LAttributedValuePass() {}
 
-    public static double evaluate(Node root) {
-        Visitor visitor = new Visitor();
+    public static double evaluate(final Node root) {
+        final Visitor visitor = new Visitor();
         root.accept(visitor);
         return LazyHelp.force(visitor._val.get(root));
     }
@@ -93,7 +93,7 @@ public class LAttributedValuePass
             = new LateBoundAttribute<>();
 
         @Override
-        protected void annotate(FloatingPointProduction node) {
+        protected void annotate(final FloatingPointProduction node) {
             _val.put(node, LazyHelp.delay(
                 _val.get(node.left()),
                 _val.get(node.right()),
@@ -104,13 +104,13 @@ public class LAttributedValuePass
         }
 
         @Override
-        protected void annotate(IntegerProduction node) {
+        protected void annotate(final IntegerProduction node) {
             _val.put(node, _val.get(node.list()));
             _side.put(node.list(), LazyHelp.delay(Side.LEFT));
         }
 
         @Override
-        protected void annotate(ConsProduction node) {
+        protected void annotate(final ConsProduction node) {
             _len.put(node, LazyHelp.delay(
                 _len.get(node.head()),
                 len -> len + 1
@@ -128,7 +128,7 @@ public class LAttributedValuePass
         }
 
         @Override
-        protected void annotate(SingletonProduction node) {
+        protected void annotate(final SingletonProduction node) {
             _len.put(node, LazyHelp.delay(1));
             _val.put(node, LazyHelp.delay(
                 _val.get(node.digit()),
@@ -138,7 +138,7 @@ public class LAttributedValuePass
         }
 
         @Override
-        protected void annotate(DigitNode node) {
+        protected void annotate(final DigitNode node) {
             _val.put(node, LazyHelp.delay((double) node.value()));
         }
     }

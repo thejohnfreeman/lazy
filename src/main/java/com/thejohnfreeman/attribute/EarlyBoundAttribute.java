@@ -23,7 +23,7 @@ public class EarlyBoundAttribute<N, T>
      * {@link #put(Object, Lazy)}.
      */
     @Override
-    public Lazy<T> get(N node) {
+    public Lazy<T> get(final N node) {
         return _attrs.get(node);
     }
 
@@ -34,7 +34,7 @@ public class EarlyBoundAttribute<N, T>
      * Must be called before {@link #get(Object)} for the same node.
      */
     @Override
-    public void put(N node, Lazy<T> value) {
+    public void put(final N node, final Lazy<T> value) {
         _attrs.put(node, value);
     }
 }

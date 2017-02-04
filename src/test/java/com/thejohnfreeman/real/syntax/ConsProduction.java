@@ -6,7 +6,7 @@ public class ConsProduction
     private final ListNode _head;
     private final DigitNode _tail;
 
-    public ConsProduction(ListNode head, DigitNode tail) {
+    public ConsProduction(final ListNode head, final DigitNode tail) {
         _head = head;
         _tail = tail;
     }
@@ -20,7 +20,7 @@ public class ConsProduction
     }
 
     @Override
-    public void accept(NodeVisitor visitor) {
+    public void accept(final NodeVisitor visitor) {
         visitor.visit(this);
     }
 

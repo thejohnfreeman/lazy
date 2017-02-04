@@ -18,14 +18,14 @@ public final class Thunk2<T, A, B>
     private Lazy<B> _depB;
     private BiFunction<A, B, T> _func;
 
-    private Thunk2(Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func) {
+    private Thunk2(final Lazy<A> a, final Lazy<B> b, final BiFunction<A, B, T> func) {
         _depA = a;
         _depB = b;
         _func = func;
     }
 
     public static <T, A, B> Thunk2<T, A, B> of(
-        Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func)
+        final Lazy<A> a, final Lazy<B> b, final BiFunction<A, B, T> func)
     {
         return new Thunk2<>(a, b, func);
     }
