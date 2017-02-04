@@ -81,6 +81,42 @@ public class ToStringTest
     }
 
     @Test
+    public void testThunk5Unforced() {
+        final Lazy<Integer> one = LazyHelp.delay(1);
+        final Lazy<Integer> five = LazyHelp.delay(
+            one, one, one, one, one, (a, b, c, d, e) -> a + b + c + d + e);
+        assertEquals("(_5_) -> ...", five.toString());
+    }
+
+    @Test
+    public void testThunk5Forced() {
+        final Lazy<Integer> one = LazyHelp.delay(1);
+        final Lazy<Integer> five = LazyHelp.delay(
+            one, one, one, one, one, (a, b, c, d, e) -> a + b + c + d + e);
+        LazyHelp.force(five);
+        assertEquals("5", five.toString());
+    }
+
+    @Test
+    public void testThunk6Unforced() {
+        final Lazy<Integer> one = LazyHelp.delay(1);
+        final Lazy<Integer> six = LazyHelp.delay(
+            one, one, one, one, one, one,
+            (a, b, c, d, e, f) -> a + b + c + d + e + f);
+        assertEquals("(_6_) -> ...", six.toString());
+    }
+
+    @Test
+    public void testThunk6Forced() {
+        final Lazy<Integer> one = LazyHelp.delay(1);
+        final Lazy<Integer> six = LazyHelp.delay(
+            one, one, one, one, one, one,
+            (a, b, c, d, e, f) -> a + b + c + d + e + f);
+        LazyHelp.force(six);
+        assertEquals("6", six.toString());
+    }
+
+    @Test
     public void testLateBoundUnbound() {
         final LateBound<Integer> unbound = LazyHelp.delay();
         assertEquals("(???) -> ???", unbound.toString());

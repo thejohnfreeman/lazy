@@ -8,6 +8,8 @@ import java.util.function.Function;
 
 import com.jfreeman.function.Function3;
 import com.jfreeman.function.Function4;
+import com.jfreeman.function.Function5;
+import com.jfreeman.function.Function6;
 
 /**
  * Functions for using lazy values.
@@ -46,6 +48,20 @@ public final class LazyHelp
         Function4<A, B, C, D, T> func)
     {
         return Thunk4.of(a, b, c, d, func);
+    }
+
+    public static <T, A, B, C, D, E> TaggableLazy<T> delay(
+        Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d, Lazy<E> e,
+        Function5<A, B, C, D, E, T> func)
+    {
+        return Thunk5.of(a, b, c, d, e, func);
+    }
+
+    public static <T, A, B, C, D, E, F> TaggableLazy<T> delay(
+        Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d, Lazy<E> e, Lazy<F> f,
+        Function6<A, B, C, D, E, F, T> func)
+    {
+        return Thunk6.of(a, b, c, d, e, f, func);
     }
 
     public static <T, E> TaggableLazy<T> delay(

@@ -66,7 +66,7 @@ def pmdCommonRuleSet = [
 pmdMain {
     consoleOutput = true
     ruleSets = pmdCommonRuleSet + [
-      'java-codesize',
+      // 'java-codesize',
       ]
 }
 
