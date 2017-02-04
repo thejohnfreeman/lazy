@@ -149,7 +149,7 @@ uploadArchives {
                     developer {
                         id 'thejohnfreeman'
                         name 'John Freeman'
-                        email 'jfreeman08@gmail.com'
+                        email 'jfreeman@twosigma.com'
                     }
                 }
             }
