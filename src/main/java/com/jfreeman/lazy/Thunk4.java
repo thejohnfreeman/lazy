@@ -2,7 +2,7 @@ package com.jfreeman.lazy;
 
 import com.google.common.collect.ImmutableList;
 
-import com.jfreeman.function.QuadFunction;
+import com.jfreeman.function.Function4;
 
 /**
  * A lazy value computed from four dependencies.
@@ -13,18 +13,18 @@ import com.jfreeman.function.QuadFunction;
  * @param <C> the type of the third dependency
  * @param <D> the type of the fourth dependency
  */
-public final class QuadThunk<T, A, B, C, D>
+public final class Thunk4<T, A, B, C, D>
     extends AbstractThunk<T>
 {
     private Lazy<A> _depA;
     private Lazy<B> _depB;
     private Lazy<C> _depC;
     private Lazy<D> _depD;
-    private QuadFunction<A, B, C, D, T> _func;
+    private Function4<A, B, C, D, T> _func;
 
-    private QuadThunk(
+    private Thunk4(
         Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d,
-        QuadFunction<A, B, C, D, T> func)
+        Function4<A, B, C, D, T> func)
     {
         _depA = a;
         _depB = b;
@@ -33,11 +33,11 @@ public final class QuadThunk<T, A, B, C, D>
         _func = func;
     }
 
-    public static <T, A, B, C, D> QuadThunk<T, A, B, C, D> of(
+    public static <T, A, B, C, D> Thunk4<T, A, B, C, D> of(
         Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d,
-        QuadFunction<A, B, C, D, T> func)
+        Function4<A, B, C, D, T> func)
     {
-        return new QuadThunk<>(a, b, c, d, func);
+        return new Thunk4<>(a, b, c, d, func);
     }
 
     @Override

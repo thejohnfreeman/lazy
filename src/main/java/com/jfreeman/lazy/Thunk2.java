@@ -11,23 +11,23 @@ import com.google.common.collect.ImmutableList;
  * @param <A> the type of the first dependency
  * @param <B> the type of the second dependency
  */
-public final class BiThunk<T, A, B>
+public final class Thunk2<T, A, B>
     extends AbstractThunk<T>
 {
     private Lazy<A> _depA;
     private Lazy<B> _depB;
     private BiFunction<A, B, T> _func;
 
-    private BiThunk(Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func) {
+    private Thunk2(Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func) {
         _depA = a;
         _depB = b;
         _func = func;
     }
 
-    public static <T, A, B> BiThunk<T, A, B> of(
+    public static <T, A, B> Thunk2<T, A, B> of(
         Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func)
     {
-        return new BiThunk<>(a, b, func);
+        return new Thunk2<>(a, b, func);
     }
 
     @Override

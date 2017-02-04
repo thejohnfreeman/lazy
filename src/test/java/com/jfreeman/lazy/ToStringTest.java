@@ -17,14 +17,14 @@ public class ToStringTest
     }
 
     @Test
-    public void testThunkUnforced() {
+    public void testThunk1Unforced() {
         final Lazy<Integer> one = LazyHelp.delay(1);
         final Lazy<Integer> two = LazyHelp.delay(one, a -> a + 1);
         assertEquals("(_1_) -> ...", two.toString());
     }
 
     @Test
-    public void testThunkForced() {
+    public void testThunk1Forced() {
         final Lazy<Integer> one = LazyHelp.delay(1);
         final Lazy<Integer> two = LazyHelp.delay(one, a -> a + 1);
         LazyHelp.force(two);
@@ -32,14 +32,14 @@ public class ToStringTest
     }
 
     @Test
-    public void testBiThunkUnforced() {
+    public void testThunk2Unforced() {
         final Lazy<Integer> one = LazyHelp.delay(1);
         final Lazy<Integer> two = LazyHelp.delay(one, one, (a, b) -> a + b);
         assertEquals("(_2_) -> ...", two.toString());
     }
 
     @Test
-    public void testBiThunkForced() {
+    public void testThunk2Forced() {
         final Lazy<Integer> one = LazyHelp.delay(1);
         final Lazy<Integer> two = LazyHelp.delay(one, one, (a, b) -> a + b);
         LazyHelp.force(two);
@@ -47,7 +47,7 @@ public class ToStringTest
     }
 
     @Test
-    public void testTriThunkUnforced() {
+    public void testThunk3Unforced() {
         final Lazy<Integer> one = LazyHelp.delay(1);
         final Lazy<Integer> three = LazyHelp.delay(
             one, one, one, (a, b, c) -> a + b + c);
@@ -55,7 +55,7 @@ public class ToStringTest
     }
 
     @Test
-    public void testTriThunkForced() {
+    public void testThunk3Forced() {
         final Lazy<Integer> one = LazyHelp.delay(1);
         final Lazy<Integer> three = LazyHelp.delay(
             one, one, one, (a, b, c) -> a + b + c);
@@ -64,7 +64,7 @@ public class ToStringTest
     }
 
     @Test
-    public void testQuadThunkUnforced() {
+    public void testThunk4Unforced() {
         final Lazy<Integer> one = LazyHelp.delay(1);
         final Lazy<Integer> four = LazyHelp.delay(
             one, one, one, one, (a, b, c, d) -> a + b + c + d);
@@ -72,7 +72,7 @@ public class ToStringTest
     }
 
     @Test
-    public void testQuadThunkForced() {
+    public void testThunk4Forced() {
         final Lazy<Integer> one = LazyHelp.delay(1);
         final Lazy<Integer> four = LazyHelp.delay(
             one, one, one, one, (a, b, c, d) -> a + b + c + d);
@@ -121,7 +121,7 @@ public class ToStringTest
     }
 
     @Test
-    public void testListThunkUnforced() {
+    public void testCollectionThunkUnforced() {
         final Collection<Lazy<String>> lazies = ImmutableList.of(
             LazyHelp.delay("alpha"), LazyHelp.delay("beta"));
         final Lazy<Collection<String>> list = LazyHelp.sequence(lazies);
@@ -129,7 +129,7 @@ public class ToStringTest
     }
 
     @Test
-    public void testListThunkForced() {
+    public void testCollectionThunkForced() {
         // Use ArrayList just to show that it can pretty-print itself.
         final Collection<Lazy<String>> lazies = new ArrayList<>();
         lazies.add(LazyHelp.delay("alpha"));

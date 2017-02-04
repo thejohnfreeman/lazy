@@ -10,7 +10,7 @@ import com.google.common.collect.ImmutableList;
  * @param <T> the type of the value
  * @param <A> the type of the dependency
  */
-public final class Thunk<T, A>
+public final class Thunk1<T, A>
     extends AbstractThunk<T>
 {
     private Lazy<A> _dep;
@@ -23,13 +23,13 @@ public final class Thunk<T, A>
      */
     private Function<A, T> _func;
 
-    private Thunk(Lazy<A> dep, Function<A, T> func) {
+    private Thunk1(Lazy<A> dep, Function<A, T> func) {
         _dep = dep;
         _func = func;
     }
 
-    public static <T, A> Thunk<T, A> of(Lazy<A> dep, Function<A, T> func) {
-        return new Thunk<>(dep, func);
+    public static <T, A> Thunk1<T, A> of(Lazy<A> dep, Function<A, T> func) {
+        return new Thunk1<>(dep, func);
     }
 
     @Override

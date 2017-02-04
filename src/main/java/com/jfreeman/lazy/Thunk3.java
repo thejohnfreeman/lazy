@@ -2,7 +2,7 @@ package com.jfreeman.lazy;
 
 import com.google.common.collect.ImmutableList;
 
-import com.jfreeman.function.TriFunction;
+import com.jfreeman.function.Function3;
 
 /**
  * A lazy value computed from three dependencies.
@@ -12,16 +12,16 @@ import com.jfreeman.function.TriFunction;
  * @param <B> the type of the second dependency
  * @param <C> the type of the third dependency
  */
-public final class TriThunk<T, A, B, C>
+public final class Thunk3<T, A, B, C>
     extends AbstractThunk<T>
 {
     private Lazy<A> _depA;
     private Lazy<B> _depB;
     private Lazy<C> _depC;
-    private TriFunction<A, B, C, T> _func;
+    private Function3<A, B, C, T> _func;
 
-    private TriThunk(
-        Lazy<A> a, Lazy<B> b, Lazy<C> c, TriFunction<A, B, C, T> func)
+    private Thunk3(
+        Lazy<A> a, Lazy<B> b, Lazy<C> c, Function3<A, B, C, T> func)
     {
         _depA = a;
         _depB = b;
@@ -29,10 +29,10 @@ public final class TriThunk<T, A, B, C>
         _func = func;
     }
 
-    public static <T, A, B, C> TriThunk<T, A, B, C> of(
-        Lazy<A> a, Lazy<B> b, Lazy<C> c, TriFunction<A, B, C, T> func)
+    public static <T, A, B, C> Thunk3<T, A, B, C> of(
+        Lazy<A> a, Lazy<B> b, Lazy<C> c, Function3<A, B, C, T> func)
     {
-        return new TriThunk<>(a, b, c, func);
+        return new Thunk3<>(a, b, c, func);
     }
 
     @Override

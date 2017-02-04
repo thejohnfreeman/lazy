@@ -6,8 +6,8 @@ import java.util.Iterator;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import com.jfreeman.function.QuadFunction;
-import com.jfreeman.function.TriFunction;
+import com.jfreeman.function.Function3;
+import com.jfreeman.function.Function4;
 
 /**
  * Functions for using lazy values.
@@ -26,26 +26,26 @@ public final class LazyHelp
     }
 
     public static <T, A> TaggableLazy<T> delay(Lazy<A> a, Function<A, T> func) {
-        return Thunk.of(a, func);
+        return Thunk1.of(a, func);
     }
 
     public static <T, A, B> TaggableLazy<T> delay(
         Lazy<A> a, Lazy<B> b, BiFunction<A, B, T> func)
     {
-        return BiThunk.of(a, b, func);
+        return Thunk2.of(a, b, func);
     }
 
     public static <T, A, B, C> TaggableLazy<T> delay(
-        Lazy<A> a, Lazy<B> b, Lazy<C> c, TriFunction<A, B, C, T> func)
+        Lazy<A> a, Lazy<B> b, Lazy<C> c, Function3<A, B, C, T> func)
     {
-        return TriThunk.of(a, b, c, func);
+        return Thunk3.of(a, b, c, func);
     }
 
     public static <T, A, B, C, D> TaggableLazy<T> delay(
         Lazy<A> a, Lazy<B> b, Lazy<C> c, Lazy<D> d,
-        QuadFunction<A, B, C, D, T> func)
+        Function4<A, B, C, D, T> func)
     {
-        return QuadThunk.of(a, b, c, d, func);
+        return Thunk4.of(a, b, c, d, func);
     }
 
     public static <T, E> TaggableLazy<T> delay(
