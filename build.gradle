@@ -7,6 +7,7 @@ buildscript {
 
     dependencies {
         classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.11'
+        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3'
     }
 }
 
@@ -23,6 +24,7 @@ plugins {
 }
 
 apply plugin: 'info.solidsoft.pitest'
+apply plugin: 'io.codearte.nexus-staging'
 
 task wrapper(type: Wrapper) {
     gradleVersion = '3.3'
@@ -126,15 +128,7 @@ signing {
 // 1. Bump the version number in build.gradle
 // 2. Commit the changes
 // 3. Tag the commit with the version number, prefixed with "v", e.g. "v1.0.0"
-// 4. Run `gradle uploadArchives`
-// 5. Follow the instructions at http://central.sonatype.org/pages/releasing-the-deployment.html
-// 6. Log into https://oss.sonatype.org/
-// 7. Navigate to the left hand side -> Build Promotion -> Staging Repositories
-// 8. In the top right, search for the group name ("com.thejohnfreeman")
-// 9. Select the staging repository
-// 10. Above the list of staging repositories, click Close
-// 11. Next to Close, click Refresh until the operation finishes
-// 12. Next to Close, click Release
+// 4. Run `./gradlew uploadArchives closeAndPromoteRepository`
 uploadArchives {
     repositories {
         mavenDeployer {
