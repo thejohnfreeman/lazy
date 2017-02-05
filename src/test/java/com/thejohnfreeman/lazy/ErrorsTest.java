@@ -34,6 +34,24 @@ public class ErrorsTest
     }
 
     @Test(expected = IllegalStateException.class)
+    public void testLateBoundGetDependenciesBeforeBind() {
+        final LateBound<Integer> lazy = LazyHelp.delay();
+        lazy.getDependencies();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testLateBoundForceBeforeBind() {
+        final LateBound<Integer> lazy = LazyHelp.delay();
+        lazy.force();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testLateBoundGetValueBeforeBind() {
+        final LateBound<Integer> lazy = LazyHelp.delay();
+        lazy.getValue();
+    }
+
+    @Test(expected = IllegalStateException.class)
     public void testThunk1GetValueBeforeForce() {
         final Lazy<Integer> two = LazyHelp.delay(LazyHelp.delay(1), a -> a + 1);
         two.getValue();

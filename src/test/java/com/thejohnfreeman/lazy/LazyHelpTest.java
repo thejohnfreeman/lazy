@@ -28,12 +28,6 @@ public class LazyHelpTest
         assertFalse(x.isForced());
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testForceUnbound() {
-        final LateBound<Integer> x = LazyHelp.delay();
-        x.force();
-    }
-
     @Test
     public void testBoundConstant() {
         final LateBound<Integer> x = LazyHelp.delay();
