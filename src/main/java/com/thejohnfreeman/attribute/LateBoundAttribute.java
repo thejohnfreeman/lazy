@@ -5,7 +5,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.thejohnfreeman.lazy.LateBound;
 import com.thejohnfreeman.lazy.Lazy;
-import com.thejohnfreeman.lazy.Output;
 
 /**
  * An attribute that may be "read" (in the sense that its lazy wrapper is
@@ -47,14 +46,5 @@ public class LateBoundAttribute<N, T>
             }
         }
         _attrs.put(node, value);
-    }
-
-    /**
-     * Return an output wrapper for a multi-output method.
-     */
-    public Output<T> put(final N node) {
-        final Output<T> output = new Output<>();
-        put(node, output);
-        return output;
     }
 }
