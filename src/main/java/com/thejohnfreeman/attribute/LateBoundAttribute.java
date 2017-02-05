@@ -34,15 +34,17 @@ public class LateBoundAttribute<N, T>
     }
 
     @Override
-    public void put(final N node, final Lazy<T> value) {
+    public void put(final N node, final Lazy<T> value)
+        throws IllegalStateException
+    {
         final Lazy<T> existing = _attrs.get(node);
         if (existing != null) {
             if (existing instanceof LateBound) {
                 ((LateBound<T>)existing).bind(value);
             } else {
-                throw new IllegalArgumentException(String.format(
-                        "attribute already assigned:%n  key: %s%n  value: %s",
-                        node, value));
+                throw new IllegalStateException(String.format(
+                    "attribute already assigned:%n  key: %s%n  value: %s",
+                    node, value));
             }
         }
         _attrs.put(node, value);

@@ -43,4 +43,11 @@ public class TaggableTest
         final Lazy<Integer> one = LazyHelp.delay(1).tag("one");
         assertEquals("1", one.toString());
     }
+
+    @Test
+    public void testForce() {
+        final Lazy<Integer> one = LazyHelp.delay(1).tag("one");
+        LazyHelp.force(one);
+        assertEquals(1, one.getValue().intValue());
+    }
 }
