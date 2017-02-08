@@ -55,7 +55,7 @@ task sourcesJar(type: Jar) {
 
 checkstyle {
     toolVersion = '7.5'
-    config = resources.text.fromFile('.checkstyle.xml')
+    config = resources.text.fromFile('config/checkstyle.checks.xml')
 }
 
 // TODO: Commented rulesets are desired but require some exclusions or
