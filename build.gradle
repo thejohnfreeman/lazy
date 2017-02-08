@@ -58,40 +58,14 @@ checkstyle {
     config = resources.text.fromFile('config/checkstyle.checks.xml')
 }
 
-// TODO: Commented rulesets are desired but require some exclusions or
-// significant refactoring.
-def pmdCommonRuleSet = [
-      'java-basic',
-      'java-braces',
-      'java-clone',
-      // 'java-comments',
-      // 'java-coupling',
-      'java-design',
-      'java-empty',
-      'java-finalizers',
-      'java-imports',
-      'java-logging-java',
-      // 'java-optimizations',
-      'java-strictexception',
-      'java-strings',
-      'java-sunsecure',
-      'java-typeresolution',
-      'java-unnecessary',
-      'java-unusedcode',
-      ]
-
 pmdMain {
     consoleOutput = true
-    ruleSets = pmdCommonRuleSet + [
-      // 'java-codesize',
-      ]
+    ruleSetFiles = files('config/pmd.xml')
 }
 
 pmdTest {
     consoleOutput = true
-    ruleSets = pmdCommonRuleSet + [
-      // 'java-junit',
-      ]
+    ruleSetFiles = files('config/pmd.xml')
 }
 
 

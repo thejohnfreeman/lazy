@@ -14,6 +14,7 @@ import com.thejohnfreeman.function.Function6;
 /**
  * Functions for using lazy values.
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class LazyHelp
 {
     /** Just a namespace, so no constructor. */
@@ -112,15 +113,17 @@ public final class LazyHelp
      * pattern for Java.
      */
     private static void forceTop(final ArrayDeque<Context> values) {
-        final Context ctx = values.getFirst();
-        if (!ctx.value.isForced()) {
-            for (final Lazy<?> dep : ctx) {
-                if (!dep.isForced()) {
-                    values.push(new Context(dep));
+        final Context context = values.getFirst();
+        if (!context.value.isForced()) {
+            for (final Lazy<?> dependency : context) {
+                if (!dependency.isForced()) {
+                    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+                    final Context ctx = new Context(dependency);
+                    values.push(ctx);
                     return;
                 }
             }
-            ctx.value.force();
+            context.value.force();
         }
         values.pop();
     }
@@ -133,7 +136,7 @@ public final class LazyHelp
         implements Iterable<Lazy<?>>, Iterator<Lazy<?>>
     {
         public final Lazy<?> value;
-        private Iterator<? extends Lazy<?>> _iterator = null;
+        private Iterator<? extends Lazy<?>> _iterator;
 
         public Context(final Lazy<?> value) {
             this.value = value;

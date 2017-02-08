@@ -26,6 +26,6 @@ public class ConsProduction
 
     @Override
     public String toString() {
-        return "" + _head + _tail;
+        return _head.toString() + _tail;
     }
 }

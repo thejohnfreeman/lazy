@@ -8,6 +8,7 @@ import java.util.Collection;
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 
+@SuppressWarnings("PMD.TooManyMethods")
 public class ToStringTest
 {
     @Test

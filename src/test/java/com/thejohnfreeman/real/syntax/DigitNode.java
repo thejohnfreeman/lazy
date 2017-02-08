@@ -26,6 +26,6 @@ public class DigitNode
 
     @Override
     public String toString() {
-        return "" + _value;
+        return String.valueOf(_value);
     }
 }

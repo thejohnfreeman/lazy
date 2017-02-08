@@ -21,6 +21,7 @@ public class LazyHelpTest
         assertEquals(2, (int) LazyHelp.force(y));
     }
 
+    @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
     @Test
     public void testUnbound() {
         final LateBound<Integer> x = LazyHelp.delay();
@@ -28,6 +29,7 @@ public class LazyHelpTest
         assertFalse(x.isForced());
     }
 
+    @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
     @Test
     public void testBoundConstant() {
         final LateBound<Integer> x = LazyHelp.delay();

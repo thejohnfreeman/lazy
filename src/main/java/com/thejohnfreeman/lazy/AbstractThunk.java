@@ -12,7 +12,7 @@ public abstract class AbstractThunk<T>
      * A null _value does not mean it has not been computed. For that, call
      * {@link #isForced()}.
      */
-    protected T _value = null;
+    protected T _value;
 
     @Override
     public T getValue()
