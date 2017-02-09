@@ -10,8 +10,6 @@ addons:
     packages:
       - oracle-java8-installer
 
-script:
-  - ./gradlew check jacocoTestReport
 after_success:
+  - ./gradlew pitest coveralls jacocoTestReport
   - bash <(curl -s https://codecov.io/bash)
-  - ./gradlew coveralls
