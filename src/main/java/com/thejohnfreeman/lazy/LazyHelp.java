@@ -3,6 +3,7 @@ package com.thejohnfreeman.lazy;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -72,12 +73,12 @@ public final class LazyHelp
 
     public static <T, E> TaggableLazy<T> delay(
         final Collection<? extends Lazy<? extends E>> lazies,
-        final Function<? super Collection<E>, T> func)
+        final Function<? super List<E>, T> func)
     {
         return CollectionThunk.of(lazies, func);
     }
 
-    public static <T> TaggableLazy<Collection<T>> sequence(
+    public static <T> TaggableLazy<List<T>> sequence(
         final Collection<? extends Lazy<? extends T>> lazies)
     {
         return CollectionThunk.sequence(lazies);

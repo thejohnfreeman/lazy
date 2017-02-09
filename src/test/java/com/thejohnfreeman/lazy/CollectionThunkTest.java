@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.function.Function;
 
 import com.google.common.collect.ImmutableList;
@@ -16,7 +17,7 @@ public class CollectionThunkTest
 {
     private <T> void assertCollectionEquals(
         final Collection<T> expected, final Collection<Lazy<T>> lazies) {
-        final Lazy<Collection<T>> lazyList = LazyHelp.sequence(lazies);
+        final Lazy<List<T>> lazyList = LazyHelp.sequence(lazies);
         final Collection<T> actual = LazyHelp.force(lazyList);
         assertThat(actual, CoreMatchers.is(expected));
     }
@@ -68,31 +69,31 @@ public class CollectionThunkTest
     // The tests below are just to assert the type checker.
 
     @Test
-    public void testFunctionOfSuperTypeCollectionOfSameType() {
+    public void testFunctionOfSuperTypeOfListOfSameType() {
         final Collection<Lazy<Integer>> lazies = Collections.emptyList();
         // We can map functions that want a specific super type of Collection
         // containing the same element type, e.g.
         // a function over Iterable<Integer> should accept a Collection<Integer>.
-        final Function<? super Collection<Integer>, String> function =
+        final Function<? super List<Integer>, String> function =
             Object::toString;
         final Lazy<String> value = LazyHelp.delay(lazies, function);
         assertNotNull(value);
     }
 
     @Test
-    public void testFunctionOfSameTypeCollectionOfSuperType() {
+    public void testFunctionOfListOfSuperType() {
         final Collection<Lazy<Integer>> lazies = Collections.emptyList();
         // We can map functions that want the same type of Collection
         // containing a super type of the element type, e.g.
         // a function over Collection<Object> should accept Collection<Integer>.
-        final Function<Collection<? super Integer>, String> function =
+        final Function<List<? super Integer>, String> function =
             Collection::toString;
         final Lazy<String> value = LazyHelp.delay(lazies, function);
         assertNotNull(value);
     }
 
     @Test
-    public void testFunctionOfSuperTypeCollectionOfSuperType() {
+    public void testFunctionOfSuperTypeOfListOfSuperType() {
         final Collection<Lazy<Integer>> lazies = Collections.emptyList();
         // We can map functions that want a specific super type of Collection
         // containing a super type of the element type, e.g.

@@ -2,10 +2,11 @@ package com.thejohnfreeman.lazy;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
 
 @SuppressWarnings("PMD.TooManyMethods")
@@ -159,19 +160,18 @@ public class ToStringTest
 
     @Test
     public void testCollectionThunkUnforced() {
-        final Collection<Lazy<String>> lazies = ImmutableList.of(
+        final Collection<Lazy<String>> lazies = ImmutableSet.of(
             LazyHelp.delay("alpha"), LazyHelp.delay("beta"));
-        final Lazy<Collection<String>> list = LazyHelp.sequence(lazies);
+        final Lazy<List<String>> list = LazyHelp.sequence(lazies);
         assertEquals("(List[2]) -> ...", list.toString());
     }
 
     @Test
     public void testCollectionThunkForced() {
-        // Use ArrayList just to show that it can pretty-print itself.
-        final Collection<Lazy<String>> lazies = new ArrayList<>();
+        final Collection<Lazy<String>> lazies = new HashSet<>();
         lazies.add(LazyHelp.delay("alpha"));
         lazies.add(LazyHelp.delay("beta"));
-        final Lazy<Collection<String>> list = LazyHelp.sequence(lazies);
+        final Lazy<List<String>> list = LazyHelp.sequence(lazies);
         LazyHelp.force(list);
         assertEquals("[alpha, beta]", list.toString());
     }

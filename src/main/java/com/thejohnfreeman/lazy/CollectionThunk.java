@@ -15,11 +15,11 @@ public final class CollectionThunk<T, E>
     extends AbstractThunk<T>
 {
     private Collection<? extends Lazy<? extends E>> _deps;
-    private Function<? super Collection<E>, T> _func;
+    private Function<? super List<E>, T> _func;
 
     private CollectionThunk(
         final Collection<? extends Lazy<? extends E>> dependencies,
-        final Function<? super Collection<E>, T> function)
+        final Function<? super List<E>, T> function)
     {
         this._deps = dependencies;
         this._func = function;
@@ -27,7 +27,7 @@ public final class CollectionThunk<T, E>
 
     public static <T, E> CollectionThunk<T, E> of(
         final Collection<? extends Lazy<? extends E>> dependencies,
-        final Function<? super Collection<E>, T> function)
+        final Function<? super List<E>, T> function)
     {
         return new CollectionThunk<>(dependencies, function);
     }
@@ -40,7 +40,7 @@ public final class CollectionThunk<T, E>
      * @param <E> the type of the values
      * @return a lazy list of values
      */
-    public static <E> CollectionThunk<Collection<E>, E> sequence(
+    public static <E> CollectionThunk<List<E>, E> sequence(
         final Collection<? extends Lazy<? extends E>> dependencies)
     {
         return CollectionThunk.of(dependencies, x -> x);
