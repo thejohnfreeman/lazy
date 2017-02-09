@@ -16,6 +16,9 @@ public interface Taggable<T>
      *
      * <p>
      * The effectiveness of this method depends on the JVM implementation.
+     *
+     * @param tag the tag
+     * @return a tagged object
      */
     default T tag(final String tag) {
         return tag(tag, /* stackLevel: */1);
