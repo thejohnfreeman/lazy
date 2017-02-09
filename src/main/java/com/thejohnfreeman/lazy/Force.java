@@ -1,88 +1,15 @@
 package com.thejohnfreeman.lazy;
 
 import java.util.ArrayDeque;
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-
-import com.thejohnfreeman.function.Function3;
-import com.thejohnfreeman.function.Function4;
-import com.thejohnfreeman.function.Function5;
-import com.thejohnfreeman.function.Function6;
 
 /**
- * Functions for using lazy values.
+ * An iterative algorithm for forcing a directed acyclic graph of lazy values.
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class LazyHelp
+public final class Force
 {
     /** Just a namespace, so no constructor. */
-    private LazyHelp() {}
-
-    public static <T> LateBound<T> delay() {
-        return LateBound.of();
-    }
-
-    public static <T> TaggableLazy<T> delay(final T value) {
-        return Constant.of(value);
-    }
-
-    public static <T, A> TaggableLazy<T> delay(
-        final Lazy<A> a, final Function<A, T> func)
-    {
-        return Thunk1.of(a, func);
-    }
-
-    public static <T, A, B> TaggableLazy<T> delay(
-        final Lazy<A> a, final Lazy<B> b, final BiFunction<A, B, T> func)
-    {
-        return Thunk2.of(a, b, func);
-    }
-
-    public static <T, A, B, C> TaggableLazy<T> delay(
-        final Lazy<A> a, final Lazy<B> b, final Lazy<C> c,
-        final Function3<A, B, C, T> func)
-    {
-        return Thunk3.of(a, b, c, func);
-    }
-
-    public static <T, A, B, C, D> TaggableLazy<T> delay(
-        final Lazy<A> a, final Lazy<B> b, final Lazy<C> c, final Lazy<D> d,
-        final Function4<A, B, C, D, T> func)
-    {
-        return Thunk4.of(a, b, c, d, func);
-    }
-
-    public static <T, A, B, C, D, E> TaggableLazy<T> delay(
-        final Lazy<A> a, final Lazy<B> b, final Lazy<C> c, final Lazy<D> d,
-        final Lazy<E> e,
-        final Function5<A, B, C, D, E, T> func)
-    {
-        return Thunk5.of(a, b, c, d, e, func);
-    }
-
-    public static <T, A, B, C, D, E, F> TaggableLazy<T> delay(
-        final Lazy<A> a, final Lazy<B> b, final Lazy<C> c, final Lazy<D> d,
-        final Lazy<E> e, final Lazy<F> f,
-        final Function6<A, B, C, D, E, F, T> func)
-    {
-        return Thunk6.of(a, b, c, d, e, f, func);
-    }
-
-    public static <T, E> TaggableLazy<T> delay(
-        final Collection<? extends Lazy<? extends E>> lazies,
-        final Function<? super List<E>, T> func)
-    {
-        return CollectionThunk.of(lazies, func);
-    }
-
-    public static <T> TaggableLazy<List<T>> sequence(
-        final Collection<? extends Lazy<? extends T>> lazies)
-    {
-        return CollectionThunk.sequence(lazies);
-    }
+    private Force() {}
 
     /**
      * When forced, a long chain of lazy values can cause a stack overflow.
@@ -124,7 +51,7 @@ public final class LazyHelp
                     return;
                 }
             }
-            context.value.force();
+            context.value.forceThis();
         }
         values.pop();
     }

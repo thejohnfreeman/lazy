@@ -17,8 +17,8 @@ public class CollectionThunkTest
 {
     private <T> void assertCollectionEquals(
         final Collection<T> expected, final Collection<Lazy<T>> lazies) {
-        final Lazy<List<T>> lazyList = LazyHelp.sequence(lazies);
-        final Collection<T> actual = LazyHelp.force(lazyList);
+        final Lazy<List<T>> lazyList = Lazy.sequence(lazies);
+        final Collection<T> actual = lazyList.force();
         assertThat(actual, CoreMatchers.is(expected));
     }
 
@@ -31,24 +31,24 @@ public class CollectionThunkTest
     @Test
     public void testSingletonList() {
         final Collection<Lazy<Integer>> lazies =
-            ImmutableList.of(LazyHelp.delay(1));
+            ImmutableList.of(Lazy.delay(1));
         assertCollectionEquals(ImmutableList.of(1), lazies);
     }
 
     @Test
     public void testList() {
         final Collection<Lazy<Integer>> lazies = ImmutableList.of(
-            LazyHelp.delay(1),
-            LazyHelp.delay(2),
-            LazyHelp.delay(3));
+            Lazy.delay(1),
+            Lazy.delay(2),
+            Lazy.delay(3));
         assertCollectionEquals(ImmutableList.of(1, 2, 3), lazies);
     }
 
     @Test
     public void testInterdependentList() {
-        final Lazy<Integer> one = LazyHelp.delay(1);
-        final Lazy<Integer> two = LazyHelp.delay(one, x -> x + 1);
-        final Lazy<Integer> three = LazyHelp.delay(two, x -> x + 1);
+        final Lazy<Integer> one = Lazy.delay(1);
+        final Lazy<Integer> two = Lazy.delay(one, x -> x + 1);
+        final Lazy<Integer> three = Lazy.delay(two, x -> x + 1);
         final Collection<Lazy<Integer>> lazies =
             ImmutableList.of(one, two, three);
         assertCollectionEquals(ImmutableList.of(1, 2, 3), lazies);
@@ -56,14 +56,14 @@ public class CollectionThunkTest
 
     @Test
     public void testInterdependentSum() {
-        final Lazy<Integer> one = LazyHelp.delay(1);
-        final Lazy<Integer> two = LazyHelp.delay(one, x -> x + 1);
-        final Lazy<Integer> three = LazyHelp.delay(two, x -> x + 1);
+        final Lazy<Integer> one = Lazy.delay(1);
+        final Lazy<Integer> two = Lazy.delay(one, x -> x + 1);
+        final Lazy<Integer> three = Lazy.delay(two, x -> x + 1);
         final Collection<Lazy<Integer>> lazies =
             ImmutableList.of(one, two, three);
-        final Lazy<Integer> sum = LazyHelp.delay(lazies,
+        final Lazy<Integer> sum = Lazy.delay(lazies,
             l -> l.stream().mapToInt(Integer::intValue).sum());
-        assertEquals(6, LazyHelp.force(sum).intValue());
+        assertEquals(6, sum.force().intValue());
     }
 
     // The tests below are just to assert the type checker.
@@ -76,7 +76,7 @@ public class CollectionThunkTest
         // a function over Iterable<Integer> should accept a Collection<Integer>.
         final Function<? super List<Integer>, String> function =
             Object::toString;
-        final Lazy<String> value = LazyHelp.delay(lazies, function);
+        final Lazy<String> value = Lazy.delay(lazies, function);
         assertNotNull(value);
     }
 
@@ -88,7 +88,7 @@ public class CollectionThunkTest
         // a function over Collection<Object> should accept Collection<Integer>.
         final Function<List<? super Integer>, String> function =
             Collection::toString;
-        final Lazy<String> value = LazyHelp.delay(lazies, function);
+        final Lazy<String> value = Lazy.delay(lazies, function);
         assertNotNull(value);
     }
 
@@ -100,7 +100,7 @@ public class CollectionThunkTest
         // a function over Iterable<Object> should accept Collection<Integer>.
         final Function<? super Iterable<? super Integer>, String> function =
             Iterable::toString;
-        final Lazy<String> value = LazyHelp.delay(lazies, function);
+        final Lazy<String> value = Lazy.delay(lazies, function);
         assertNotNull(value);
     }
 }

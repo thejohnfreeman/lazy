@@ -47,10 +47,10 @@ public final class TaggedLazy<T>
     }
 
     @Override
-    public T force()
+    public T forceThis()
         throws IllegalStateException
     {
-        return _value.force();
+        return _value.forceThis();
     }
 
     @Override

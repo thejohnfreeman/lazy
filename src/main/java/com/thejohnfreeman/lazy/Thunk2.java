@@ -46,7 +46,7 @@ public final class Thunk2<T, A, B>
     }
 
     @Override
-    public T force()
+    public T forceThis()
         throws IllegalStateException
     {
         if (isForced()) {

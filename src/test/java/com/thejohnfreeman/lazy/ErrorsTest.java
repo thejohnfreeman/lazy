@@ -8,13 +8,13 @@ public class ErrorsTest
 {
     @Test(expected = IllegalStateException.class)
     public void testConstantForce() {
-        final Lazy<Integer> one = LazyHelp.delay(1);
-        one.force();
+        final Lazy<Integer> one = Lazy.delay(1);
+        one.forceThis();
     }
 
     @Test(expected = IllegalStateException.class)
     public void testConstantDependencies() {
-        final Lazy<Integer> one = LazyHelp.delay(1);
+        final Lazy<Integer> one = Lazy.delay(1);
         one.getDependencies();
     }
 
@@ -22,52 +22,52 @@ public class ErrorsTest
     public void testLateBoundAttributePutTwice() {
         final LateBoundAttribute<Object, Integer> attribute =
             new LateBoundAttribute<>();
-        attribute.put(this, LazyHelp.delay(1));
-        attribute.put(this, LazyHelp.delay(2));
+        attribute.put(this, Lazy.delay(1));
+        attribute.put(this, Lazy.delay(2));
     }
 
     @Test(expected = IllegalStateException.class)
     public void testLateBoundBindTwice() {
-        final LateBound<Integer> lazy = LazyHelp.delay();
-        lazy.bind(LazyHelp.delay(1));
-        lazy.bind(LazyHelp.delay(2));
+        final LateBound<Integer> lazy = Lazy.delay();
+        lazy.bind(Lazy.delay(1));
+        lazy.bind(Lazy.delay(2));
     }
 
     @Test(expected = IllegalStateException.class)
     public void testLateBoundGetDependenciesBeforeBind() {
-        final LateBound<Integer> lazy = LazyHelp.delay();
+        final LateBound<Integer> lazy = Lazy.delay();
         lazy.getDependencies();
     }
 
     @Test(expected = IllegalStateException.class)
     public void testLateBoundForceBeforeBind() {
-        final LateBound<Integer> lazy = LazyHelp.delay();
-        lazy.force();
+        final LateBound<Integer> lazy = Lazy.delay();
+        lazy.forceThis();
     }
 
     @Test(expected = IllegalStateException.class)
     public void testLateBoundGetValueBeforeBind() {
-        final LateBound<Integer> lazy = LazyHelp.delay();
+        final LateBound<Integer> lazy = Lazy.delay();
         lazy.getValue();
     }
 
     @Test(expected = IllegalStateException.class)
     public void testThunk1GetValueBeforeForce() {
-        final Lazy<Integer> two = LazyHelp.delay(LazyHelp.delay(1), a -> a + 1);
+        final Lazy<Integer> two = Lazy.delay(Lazy.delay(1), a -> a + 1);
         two.getValue();
     }
 
     @Test(expected = IllegalStateException.class)
     public void testThunk1GetDependenciesAfterForce() {
-        final Lazy<Integer> two = LazyHelp.delay(LazyHelp.delay(1), a -> a + 1);
-        LazyHelp.force(two);
+        final Lazy<Integer> two = Lazy.delay(Lazy.delay(1), a -> a + 1);
+        two.force();
         two.getDependencies();
     }
 
     @Test(expected = IllegalStateException.class)
     public void testThunk1ForceAfterForce() {
-        final Lazy<Integer> two = LazyHelp.delay(LazyHelp.delay(1), a -> a + 1);
-        LazyHelp.force(two);
+        final Lazy<Integer> two = Lazy.delay(Lazy.delay(1), a -> a + 1);
         two.force();
+        two.forceThis();
     }
 }

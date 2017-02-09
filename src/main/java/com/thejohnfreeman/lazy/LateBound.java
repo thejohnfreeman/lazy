@@ -73,13 +73,13 @@ public final class LateBound<T>
     }
 
     @Override
-    public T force()
+    public T forceThis()
         throws IllegalStateException
     {
         if (!isBound()) {
             throw new IllegalStateException("unbound");
         }
-        return _value.force();
+        return _value.forceThis();
     }
 
     @Override

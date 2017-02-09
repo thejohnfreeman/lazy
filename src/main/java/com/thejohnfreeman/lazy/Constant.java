@@ -27,7 +27,7 @@ public final class Constant<T>
     }
 
     @Override
-    public T force()
+    public T forceThis()
         throws IllegalStateException
     {
         throw new IllegalStateException("already forced");

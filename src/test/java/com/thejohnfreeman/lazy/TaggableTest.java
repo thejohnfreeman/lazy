@@ -11,7 +11,7 @@ public class TaggableTest
         final String expected =
             "(???) -> xyz at TaggableTest.testTag() @ TaggableTest.java:14";
         // The origin is the next line.
-        final Lazy<Object> lazy = LazyHelp.delay().tag("xyz");
+        final Lazy<Object> lazy = Lazy.delay().tag("xyz");
         assertEquals(expected, lazy.toString());
     }
 
@@ -19,14 +19,14 @@ public class TaggableTest
     public void testTagWithExplicitStackLevel() {
         final String expected =
             "(???) -> xyz at TaggableTest.testTagWithExplicitStackLevel() @ TaggableTest.java:24";
-        final Lazy<Object> lazy = LazyHelp
+        final Lazy<Object> lazy = Lazy
             // The origin is the next line.
             .delay().tag("xyz", /* stackLevel: */0);
         assertEquals(expected, lazy.toString());
     }
 
     private Lazy<Object> getTaggedLazy() {
-        return LazyHelp.delay().tag("xyz", /* stackLevel: */1);
+        return Lazy.delay().tag("xyz", /* stackLevel: */1);
     }
 
     @Test
@@ -40,15 +40,15 @@ public class TaggableTest
 
     @Test
     public void testForced() {
-        final Lazy<Integer> one = LazyHelp.delay(1).tag("one");
+        final Lazy<Integer> one = Lazy.delay(1).tag("one");
         assertEquals("1", one.toString());
     }
 
     @Test
     public void testForce() {
-        final Lazy<Integer> one = LazyHelp.delay(1);
-        final Lazy<Integer> two = LazyHelp.delay(one, a -> 1 + a).tag("two");
-        LazyHelp.force(two);
+        final Lazy<Integer> one = Lazy.delay(1);
+        final Lazy<Integer> two = Lazy.delay(one, a -> 1 + a).tag("two");
+        two.force();
         assertEquals(2, two.getValue().intValue());
     }
 }
