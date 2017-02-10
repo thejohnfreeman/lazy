@@ -21,6 +21,7 @@ plugins {
     // id 'info.solidsoft.pitest' version '1.1.4'
     id 'jacoco'
     id 'com.github.kt3k.coveralls' version '2.8.1'
+    id 'pl.allegro.tech.build.axion-release' version '1.5.0'
 }
 
 apply plugin: 'info.solidsoft.pitest'
@@ -30,8 +31,30 @@ task wrapper(type: Wrapper) {
     gradleVersion = '3.3'
 }
 
+scmVersion {
+    localOnly = true
+    tag {
+        prefix = 'v'
+        versionSeparator = ''
+    }
+}
+
+task releaseMinor {
+    doLast {
+        project['release.versionIncrementer'] = 'incrementMinor'
+    }
+    finalizedBy release
+}
+
+task releaseMajor {
+    doLast {
+        project['release.versionIncrementer'] = 'incrementMajor'
+    }
+    finalizedBy release
+}
+
 group = 'com.thejohnfreeman'
-version = '0.6.0'
+version = scmVersion.version
 sourceCompatibility = '1.8'
 
 repositories {
