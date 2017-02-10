@@ -122,10 +122,9 @@ signing {
 }
 
 // To release a new version:
-// 1. Bump the version number in build.gradle
-// 2. Commit the changes
-// 3. Tag the commit with the version number, prefixed with "v", e.g. "v1.0.0"
-// 4. Run `./gradlew uploadArchives closeAndPromoteRepository`
+// 1. ./gradlew (release | releaseMinor | releaseMajor)
+// 2. git push --tags
+// 3. ./gradlew uploadArchives closeAndPromoteRepository
 uploadArchives {
     repositories {
         mavenDeployer {
