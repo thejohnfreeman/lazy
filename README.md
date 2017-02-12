@@ -1,5 +1,4 @@
 # lazy
-------
 
 A library for type-safe, tractable lazy evaluation and late binding in Java.
 Useful for defining [syntax-directed translations][sdt] with
@@ -14,8 +13,6 @@ Useful for defining [syntax-directed translations][sdt] with
 [![Javadocs](http://javadoc.io/badge/com.thejohnfreeman/lazy.svg)](http://javadoc.io/doc/com.thejohnfreeman/lazy)
 [![Build Status](https://travis-ci.org/thejohnfreeman/lazy.svg?branch=master)](https://travis-ci.org/thejohnfreeman/lazy)
 [![Coverage Status](https://coveralls.io/repos/github/thejohnfreeman/lazy/badge.svg?branch=master)](https://coveralls.io/github/thejohnfreeman/lazy?branch=master)
-
-----
 
 ## Example
 
