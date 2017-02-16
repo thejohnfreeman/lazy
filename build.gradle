@@ -1,13 +1,3 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3'
-    }
-}
-
 plugins {
     id 'java'
     id 'maven'
@@ -19,9 +9,8 @@ plugins {
     id 'jacoco'
     id 'com.github.kt3k.coveralls' version '2.8.1'
     id 'pl.allegro.tech.build.axion-release' version '1.5.0'
+    id 'io.codearte.nexus-staging' version '0.5.3'
 }
-
-apply plugin: 'io.codearte.nexus-staging'
 
 task wrapper(type: Wrapper) {
     gradleVersion = '3.3'
