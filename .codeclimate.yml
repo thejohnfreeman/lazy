@@ -1,0 +1,14 @@
+prepare:
+  fetch:
+  - url: "https://raw.githubusercontent.com/thejohnfreeman/lazy/master/config/checkstyle.checks.xml"
+  - url: "https://raw.githubusercontent.com/thejohnfreeman/lazy/master/config/pmd.xml"
+engines:
+  pmd:
+    enabled: true
+    channel: "beta"
+  checkstyle:
+    enabled: true
+    channel: "beta"
+ratings:
+  paths: "**.java"
+exclude_paths: []
