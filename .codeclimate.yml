@@ -1,6 +1,7 @@
 prepare:
   fetch:
   - url: "https://raw.githubusercontent.com/thejohnfreeman/lazy/master/config/checkstyle.checks.xml"
+  - url: "https://raw.githubusercontent.com/thejohnfreeman/lazy/master/config/checkstyle.suppressions.xml"
   - url: "https://raw.githubusercontent.com/thejohnfreeman/lazy/master/config/pmd.xml"
 engines:
   pmd:
