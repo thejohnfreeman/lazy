@@ -1,5 +1,6 @@
 # lazy
 
+[![Code Climate](https://codeclimate.com/github/davehenton/lazy/badges/gpa.svg)](https://codeclimate.com/github/davehenton/lazy)
 A library for type-safe, tractable lazy evaluation and late binding in Java.
 Useful for defining [syntax-directed translations][sdt] with
 [visitors][visitor] that look nearly identical to the semantic rules of their
